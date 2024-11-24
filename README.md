@@ -15,7 +15,6 @@ How to incorporate react in ur project
     2nd Way- 
 
 
-
 React not only works on browsers but also on mobiles (react native) etc devices also. That is why w ehave 2 files
     - react -> core react functioality
     - react-dom -> bridge between react and browser having react operations thats can modify document.
