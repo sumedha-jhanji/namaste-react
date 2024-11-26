@@ -9,10 +9,10 @@
 - for react it is a place where we have react libraries hosted and we are pulling these into our project    
   
     ## Benefits of Using a CDN**:
-        - Faster Load Times: By delivering content from a server closest to the user, CDNs reduce latency and improve load times.
-        - Reduced Server Load: Offloading traffic to a CDN reduces the burden on your primary server, enhancing performance.
-        - Reliability: CDNs offer redundancy, ensuring content availability even if one server goes down.
-        - Scalability: Easily handle high traffic volumes without affecting performance.
+    - Faster Load Times: By delivering content from a server closest to the user, CDNs reduce latency and improve load times.
+    - Reduced Server Load: Offloading traffic to a CDN reduces the burden on your primary server, enhancing performance.
+    - Reliability: CDNs offer redundancy, ensuring content availability even if one server goes down.
+    - Scalability: Easily handle high traffic volumes without affecting performance.
     
     ## Steps to add React using CDN links
     - Go to https://legacy.reactjs.org/docs/cdn-links.html
@@ -104,8 +104,8 @@
 
 - app.js
   ```js
-    **import React from "react";
-    import ReactDOM from "react-dom/client";**
+    import React from "react";
+    import ReactDOM from "react-dom/client";
     
     const root = ReactDOM.createRoot(document.getElementById("root")); 
     const parent = React.createElement("div", { id: "parent" }, [
