@@ -7,7 +7,7 @@
 - network of servers distributed geographically to deliver content to users more efficiently.
 - for react it is a place where we have react libraries hosted and we are pulling these into our project    
   
-    ## Benefits of Using a CDN**:
+    ## Benefits of Using a CDN:
     - Faster Load Times: By delivering content from a server closest to the user, CDNs reduce latency and improve load times.
     - Reduced Server Load: Offloading traffic to a CDN reduces the burden on your primary server, enhancing performance.
     - Reliability: CDNs offer redundancy, ensuring content availability even if one server goes down.
