@@ -1,10 +1,9 @@
 # React
 - Most popular javascript library
 - used to build large-scale front-end application
-
-## How to incorporate react in your project
 - Two ways available to incorporate react in project
-## CDN Links in react
+- 
+## 1st - CDN Links in react
 - network of servers distributed geographically to deliver content to users more efficiently.
 - for react it is a place where we have react libraries hosted and we are pulling these into our project    
   
@@ -23,7 +22,7 @@
       <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
       <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
 
-## Using npm (npmjs.com)
+## 2nd - Using npm (npmjs.com)
 - package manager which is collection of libraries.
 - standard repository for all the packages.
 - all package(libraries, utilities) are hosted here.
