@@ -1,4 +1,4 @@
-#React
+# React
 - Most popular javascript library
 - used to build large-scale front-end application
 
