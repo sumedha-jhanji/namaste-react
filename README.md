@@ -19,8 +19,10 @@
       - Development
       - Productoon
     - Copy the development links and add the same in startup file of project
+     ``` js
       <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
       <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+     ```
 
 ## 2nd - Using npm (npmjs.com)
 - package manager which is collection of libraries.
@@ -100,7 +102,9 @@
     import ReactDOM from "react-dom/client";
   ```
 - Also, we need to add "**type="module**" to start script files script tag
+  ``` js
   <script type="module" src="./app.js"></script>
+  ```
 
 - app.js
   ```js
