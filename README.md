@@ -95,7 +95,8 @@
 
 ## Steps to make code working using npm libraries and using traditional way of app.js React code (via React.CreateElement())
 - In app.js, we need to import React and ReactDOM to make the code working without CDN links and using npm libraries.
-  ```js import React from "react";
+  ```js
+    import React from "react";
     import ReactDOM from "react-dom/client";
   ```
 - Also, we need to add "**type="module**" to start script files script tag
