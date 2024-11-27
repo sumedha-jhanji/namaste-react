@@ -1,24 +1,44 @@
-React
-    - Most popular javascript library
-    - used to build large-scale front-end application
+# React
+- Most popular javascript library
+- used to build large-scale front-end application
+- Two ways available to incorporate react in project
+  
+## 1st - CDN Links in react
+- network of servers distributed geographically to deliver content to users more efficiently.
+- for react it is a place where we have react libraries hosted and we are pulling these into our project
 
-How to incorporate react in ur project
-    Ist way - CDN Links in react
-        - network of servers distributed geographically to deliver content to users more efficiently.
-        - Benefits of Using a CDN:
-            - Faster Load Times: By delivering content from a server closest to the user, CDNs reduce latency and improve load times.
-            - Reduced Server Load: Offloading traffic to a CDN reduces the burden on your primary server, enhancing performance.
-            - Reliability: CDNs offer redundancy, ensuring content availability even if one server goes down.
-            - Scalability: Easily handle high traffic volumes without affecting performance.
-        - for react it is a place where we have react libraries hosted and we are pulling these into our project
-        https://legacy.reactjs.org/docs/cdn-links.html
-    2nd Way- 
+## Benefits of Using a CDN:
+- Faster Load Times: By delivering content from a server closest to the user, CDNs reduce latency and improve load times.
+- Reduced Server Load: Offloading traffic to a CDN reduces the burden on your primary server, enhancing performance.
+- Reliability: CDNs offer redundancy, ensuring content availability even if one server goes down.
+- Scalability: Easily handle high traffic volumes without affecting performance.
 
+## Steps to add React using CDN links
+- Go to https://legacy.reactjs.org/docs/cdn-links.html
+- Above will have 2 versions of React and ReactDOM CDN links available
+    - Development
+    - Productoon
+- Copy the development links and add the same in startup file of project
+```js
+ <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+ <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+```
 
+## 2nd - Using npm (npmjs.com)
+- package manager which is collection of libraries.
+- standard repository for all the packages.
+- all package(libraries, utilities) are hosted here.
+- NPM manages these packages
 
-React not only works on browsers but also on mobiles (react native) etc devices also. That is why w ehave 2 files
-    - react -> core react functioality
-    - react-dom -> bridge between react and browser having react operations thats can modify document.
+## Steps to include npm in project
+- Run command "npm init" on teminal
+- Specify the required details it is asking for.
+- As a reult we will get "package.json" (configuartion for npm)
+
+## React and ReactDOM
+- React not only works on browsers but also on mobiles (react native) etc devices also. That is why wehave 2 files
+    - React -> consists of core react functionality
+    - React-Dom -> bridge between react and browser. It is having react operations thats can modify document.
 
 ## Rendering Data
 - If we are rendering any thing inside element of HTML, what ever content it earlier has will get replaced with latest render content   
@@ -29,7 +49,28 @@ React not only works on browsers but also on mobiles (react native) etc devices 
 - It bundles/package the app for deployment on production
 - **Parcel** -It comes as node package. To incldue it in project we need to use **npm**
     - npm install -D parcel   // here -D is for dev dependencies
-    -  it will install say parcel latest version and show it in package.json as -> "parcel": "^2.13.0"
+    - Zero Config tool
+    - it will install say parcel latest version and show it in package.json as -> "parcel": "^2.13.0"
+    - it will build development app
+    - create a server for us 
+    - host app on that server -> provide URL + port.
+    - do "Hot Module Replacement (HMR)" as parcel uses file watching algo(written in c++)
+        - is a feature that improves the development experience by automatically updating modules in the browser at runtime without needing a full page refresh
+        - the application state can be retained as you make changes to your code, making development faster and more efficient
+    - parcel is caching things for us that's why it is taking less time in building project next time (.parcel-cache folder)
+    ![alt text](image.png)
+    - Image optimization
+    - Minification and bundling of files
+    - Compress files
+    - Consistent Hashing
+    - Code Splitting
+    - Differetial Bundling - to support older browsers
+    - Diagnostics
+    - Good Error Handling
+    - Provides way to host app on HTTPS
+    - Tree Shaking - remove unused code.
+    - Has Lazy mode also => npm install parcel --lazy
+    - Different bundle/build for dev and production
 
 ## Dependencies
 - There are 2 types are dependencies in app
@@ -62,10 +103,12 @@ React not only works on browsers but also on mobiles (react native) etc devices 
 ## Build project using parcel
 - npx parcel "source file" (npx means executing a package)
     example -> npx parcel index.html
-- it will build development app
-- create a server for us 
-- host app on that server -> provide URL + port.
-- do "Hot Module Replacement (HMR)" as parcel uses file watching algo(written in c++)
+- all build file will get stored in "dist" folder
+
+## Production build
+- npx parcel **build** "<source file>"
+- Also remove "main": "app.js" from package.json
+![alt text](image-1.png)
     
 ## Install React
 - "npm install react" OR "npm i react"
@@ -140,6 +183,19 @@ React not only works on browsers but also on mobiles (react native) etc devices 
     </body>    
     </html>   
   ```
+
+## browsersList (browserslist.dev)
+- to make app compatible with older browsers
+- it is an npm package
+- it needs some configuration
+- we need to tell our project via pakcage.json that which all browesers we need to support
+![alt text](image-2.png)
+- we can give country specific list also
+```js
+"broswersList":[
+    "last 2 version"  // last 2 versions if all the browsers
+]
+``` 
 
 
 
