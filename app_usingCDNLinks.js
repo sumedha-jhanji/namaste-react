@@ -1,6 +1,3 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-
 const root = ReactDOM.createRoot(document.getElementById("root")); //since we have to modify dom so we used ReactDOM
 
 // parameters of createElement() -> ist ->tag, 2nd ->  object -> {} -> place where we will give attributes to tag, 3rd -> what needs to bee put in tag(text, or array of child elements)
