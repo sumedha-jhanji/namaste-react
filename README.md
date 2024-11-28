@@ -40,8 +40,32 @@
     - React -> consists of core react functionality
     - React-Dom -> bridge between react and browser. It is having react operations thats can modify document.
 
-## Rendering Data
+## React Element
+- similar to DOM element but not the DOM Element. 
+- React element is basically an object.
+- when we render react element on DOM, then it becomes DOM element/HTML Element that we see on web page.
+
+## How to create react element in traditional way
+```js
+React.createElement("h1",{id: "heading"}, "This is heading tag")
+```
+- createElement will take 3 parameters
+  - tag/element that needs to be created
+  - object that can have additional tag properties/attributes.
+  - Child of tag which can be either a plain string or can be another react element.
+
+## Rendering Data (React Element)
 - If we are rendering any thing inside element of HTML, what ever content it earlier has will get replaced with latest render content   
+```js
+var root = ReactDom.createRoot("root");
+const heading = React.createElement(
+  "h1",
+  { id: "heading", key: "heading" },
+  "Hello World! from react"
+);
+root.Render(heading);
+```
+**Note:** React.createElement => object => Render() => HTML element
 
 ## Bundlers
 - We need to bundle our code, minify our code, clean our code etc before deploying to production. For that we use bundlers. 
@@ -196,6 +220,197 @@
     "last 2 version"  // last 2 versions if all the browsers
 ]
 ``` 
+
+## Create Script to build the project
+- create npm script in package.json
+![alt text](image-3.png)
+- "start" -> build and start project in dev mode
+= "build" -> create production build.
+- on terminal now run commmand 
+  - "npm run start"
+  OR
+  - "npm start" ( will work only for start not for build)
+
+## Extensions for making react code more readable
+- Better Command
+- Prettier Code
+- ESLint
+- Bracket pair colorization toggler
+
+# JSX
+- Javascript syntax which is easier to create react elements
+- it is not part of react.
+- convention where we can merge the markup(html) and logic(js) together
+- it is **not an HTML**, it is **HTML like syntax**
+- is a syntax extension for JavaScript used with React to describe what the UI should look like. 
+- it allows you to write HTML-like code within JavaScript, making it easier to create and manage UI components
+- component integration: You can embed React components within JSX to build complex UIs.
+- You can use curly braces {} to embed JavaScript expressions within JSX.
+- Js engine does not understand JSX. It is not supported by browsers. It is not valid pure javascript
+- Js engine understands ES6 (ecmascript 6)
+- parcel uses **Babel** and transpiled JSX code before it goes to Js engine
+- JSX code => transpiled to React.CreateElement using Babel => JS oject => render() => HTML Element
+- attributes in JSX are camel case
+- to run any JS code in JSX, we can use {}. We can write any piece of code inside {} even console.log
+
+## Create React Element
+```js
+const jsxHeading = <h1 id="heading" className="head" tabIndex="1">Namaste React</h1>
+```
+above JSX converts into HTML
+```html
+<h1 id="heading" class="head" tabindex="1"></h1>
+```
+
+- Multiple line JSX needs to wrap inside paranthesis
+
+```js
+const jsxHeading = (<h1 id="heading" className="head" tabIndex="1">
+Namaste React
+</h1>)
+```
+
+## Babel (babeljs.io)
+- javascript compiler
+- takes JSX and convert it into code that Js engine understands
+- for older brwsers, babel transpiles theb ES6 code to th ES version which can be understood by browser
+
+## React Components
+- everything in react is a component
+- example -> button, input box, list etc
+- class based components & functional components
+
+## Class based component
+- old way fo writting code (no body uses now)
+- uses javascript classes
+- defined using ES6 class syntax and extend the React.Component class
+- key feature
+  - state management
+  - life cycle methods
+  - event handling
+    - can handle events using methods within the class. These methods are bound to the component’s context
+
+## Functional component
+- old way fo writting code
+- uses javascript functions
+- JavaScript functions that return JSX (JavaScript XML) and can accept props as arguments.
+- use hooks to maintain state, effects etc without writing classes
+- have less boilerplate code, making them more concise.
+- have better performance because they are stateless by default.
+- functional component name always starting with capital letter
+- Js function returns react element(s).
+
+```js
+const HeadingComponent = () =>{
+  return <h1>Namaste React functional component</h1>
+};
+```
+OR
+```js
+const HeadingComponent = () => <h1>Namaste React functional component</h1>
+```
+OR
+```js
+const HeadingComponent = function() {
+  return (<h1>Namaste React functional component</h1>)
+};
+```
+
+## Render Component
+```js
+root.render(<HeadingComponent />)
+```
+
+## Component Composition (Render react component in react component)
+- is a fundamental concept in React that involves building complex UIs by combining simpler, reusable components. 
+- this approach promotes modularity and reusability, making your codebase more maintainable and easier to understand.
+- render react component inside react component
+- component cannot be rendered before initialization of same
+
+```js
+import React from "react";
+import ReactDOM from "react-dom/client";
+const root = ReactDOM.createRoot(document.getElementById("root"));
+const HeadingComponent = () => {
+  return (
+    <div id="body">
+      <h1 id="heading">Namaste React functional component - Heading</h1>
+      <TitleComponent />
+    </div>
+  );
+};
+
+const TitleComponent = () => (
+  <h1 id="title" className="title" tabIndex="3">
+    Namaste React functional Component - Title
+  </h1>
+);
+
+root.render(<HeadingComponent />);
+```
+
+## Render react element in react component
+```js
+import React from "react";
+import ReactDOM from "react-dom/client";
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+
+//React Element
+const heading = (
+  <h1 id="heading" className="head" tabIndex="3">
+    Namaste React
+  </h1>
+);
+
+//React Functional Component
+const HeadingComponent = () => {
+  return (
+    <div id="body">
+      <h1 id="heading">Namaste React functional component - Heading</h1>
+      {/* component composition */}
+      <TitleComponent /> 
+      {/* Render react element */}
+      {heading}
+    </div>
+  );
+};
+
+const TitleComponent = () => (
+  <h1 id="title" className="title" tabIndex="3">
+    Namaste React functional Component - Title
+  </h1>
+);
+
+root.render(<HeadingComponent />);
+```
+
+## Cross Site Scripting attacks (XXS)
+- As data is wrapped inside {}, JSX takes care of malicious data
+- JSX will escape it 
+- automatically taken care by react.
+- ways to prevent from XXS
+  - Use JSX: React's JSX syntax automatically escapes any values embedded in JSX before rendering them, which helps prevent XSS
+  ```js 
+  const userContent = "<script>alert('XSS')</script>";
+  return <div>{userContent}</div>; // React will escape the script tag
+  ```
+
+  - Avoid dangerouslySetInnerHTML: if you need to insert raw HTML, use dangerouslySetInnerHTML with caution and ensure the content is sanitized.
+  ```js
+  const sanitizedContent = sanitize(userContent); // Use a sanitization library
+  return <div dangerouslySetInnerHTML={{ __html: sanitizedContent }} />;
+  ```
+
+  - Sanitize User Input: Always sanitize user input before displaying it, especially if it comes from an untrusted source
+  ```js
+  import DOMPurify from 'dompurify';
+  const sanitizedContent = DOMPurify.sanitize(userContent);
+  return <div>{sanitizedContent}</div>;
+  ```
+  - Use Libraries: Utilize libraries like DOMPurify or sanitize-html to sanitize user input before rendering it
+
+
 
 
 
