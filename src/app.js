@@ -1,10 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import Logo from "./images/food_logo.jpg";
-import Cart from "./images/cart.jpg";
+import Logo from "../images/food_logo.jpg"
+import Cart from "../images/cart.jpg";
 // import StarRating from "./images/star-rating.jpg";
 // import ResData from "./resData.json"
-import RestaurantData from "./restaurantData.json";
+import RestaurantData from "../restaurantData.json";
 
 /** Food App component
  * Header

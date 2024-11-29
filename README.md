@@ -134,7 +134,7 @@ root.Render(heading);
 - npx parcel **build** "<source file>"
 - Also remove "main": "app.js" from package.json
 
-![alt text](image-1.png)
+![alt text](images/readme_images/image-1.png)
     
 ## Install React
 - "npm install react" OR "npm i react"
@@ -216,7 +216,7 @@ root.Render(heading);
 - it needs some configuration
 - we need to tell our project via pakcage.json that which all browesers we need to support
 
-![alt text](image-2.png)
+![alt text](images/readme_images/image-2.png)
 - we can give country specific list also
 ```js
 "broswersList":[
@@ -227,7 +227,7 @@ root.Render(heading);
 ## Create Script to build the project
 - create npm script in package.json
 
-![alt text](image-3.png)
+![alt text](images/readme_images/image-3.png)
 - "start" -> build and start project in dev mode
 = "build" -> create production build.
 - on terminal now run commmand 
@@ -420,15 +420,15 @@ root.render(<HeadingComponent />);
 - we can pass any number of props
 - passing props syntax -> "propname"="value" as component property
 
-![alt text](image-4.png)
+![alt text](images/readme_images/image-4.png)
 - referring passed rpop in component using {props.propname}
 
-![alt text](image-5.png)
+![alt text](images/readme_images/image-5.png)
 
 ## Destructuring props
 - in component, we can specify props as below
 
-![alt text](image-7.png)
+![alt text](images/readme_images/image-7.png)
 
 **OR**
 
@@ -476,28 +476,29 @@ const {resName, resCuisine, resRating, resTiming} = props
 ## Dynamically binding to elemments in json and loop through it
 - we can loop elements of object using map()
 
-![alt text](image-6.png)
+![alt text](images/readme_images/image-6.png)
 
 - same can then ne used at appropriate places as below
 
-![alt text](image-8.png)
+![alt text](images/readme_images/image-8.png)
 
 
 ## Each child in a list should have unique key prop - Warning
 - we must assign key value to each child element of list so that they cna be uniquely represented
 - key={}
 - key is a reserved word which needs unique value like "id" 
-![alt text](image-6.png)
+
+![alt text](images/readme_images/image-6.png)
 
 **OR another way**
 - use index which is second argument of map()- Not recommended
 - if order of items change, this can negatively impact performance abd may cause issues with component state.
 - it is considerd as Anti-Pattern
 
-![alt text](image-9.png)
+![alt text](images/readme_images/image-9.png)
 
 
-## why we need unique key
+## Why we need unique key
 - react optimizes its render cycle, so components need to have unique ids. 
 - say, if some new component comes up, DOM has to place that at required place. 
 - Using unique id, react will come to know what modification has been made. 
