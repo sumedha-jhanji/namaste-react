@@ -83,7 +83,7 @@ root.Render(heading);
         - the application state can be retained as you make changes to your code, making development faster and more efficient
     - parcel is caching things for us that's why it is taking less time in building project next time (.parcel-cache folder)
     
-    ![alt text](images/readme_images/image-.png)
+    ![alt text](images/readme_images/image.png)
     
     - Image optimization
     - Minification and bundling of files
