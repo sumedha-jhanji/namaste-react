@@ -82,6 +82,7 @@ root.Render(heading);
         - is a feature that improves the development experience by automatically updating modules in the browser at runtime without needing a full page refresh
         - the application state can be retained as you make changes to your code, making development faster and more efficient
     - parcel is caching things for us that's why it is taking less time in building project next time (.parcel-cache folder)
+    
     ![alt text](image.png)
     - Image optimization
     - Minification and bundling of files
@@ -132,6 +133,7 @@ root.Render(heading);
 ## Production build
 - npx parcel **build** "<source file>"
 - Also remove "main": "app.js" from package.json
+
 ![alt text](image-1.png)
     
 ## Install React
@@ -213,6 +215,7 @@ root.Render(heading);
 - it is an npm package
 - it needs some configuration
 - we need to tell our project via pakcage.json that which all browesers we need to support
+
 ![alt text](image-2.png)
 - we can give country specific list also
 ```js
@@ -223,6 +226,7 @@ root.Render(heading);
 
 ## Create Script to build the project
 - create npm script in package.json
+
 ![alt text](image-3.png)
 - "start" -> build and start project in dev mode
 = "build" -> create production build.
@@ -410,7 +414,94 @@ root.render(<HeadingComponent />);
   ```
   - Use Libraries: Utilize libraries like DOMPurify or sanitize-html to sanitize user input before rendering it
 
+## Props (properties)
+- to pass data dynamically to component.
+- just normal arguments to a function
+- we can pass any number of props
+- passing props syntax -> "propname"="value" as component property
 
+![alt text](image-4.png)
+- referring passed rpop in component using {props.propname}
+
+![alt text](image-5.png)
+
+## Destructuring props
+- in component, we can specify props as below
+
+![alt text](image-7.png)
+
+**OR**
+
+const {resName, resCuisine, resRating, resTiming} = props
+
+## Config Driven UI
+- website is drive by data using configs
+- controlling the UI using config data.
+- config comes from backend
+- example food apps, they show data based on location
+- is a design pattern where the structure and behavior of the user interface are defined using configuration files rather than being hard-coded into the application
+- configuration files are typically in formats like JSON or YAML
+- By separating the UI logic from the code, developers can easily modify the UI without changing the underlying codebase
+
+## How Config-Driven UI Works
+- Config-driven UI uses configuration files to control how the UI looks and works. 
+- These files can be in formats like JSON or YAML. 
+- The configuration file usually contains information about components, their properties, and how they should be arranged on the screen.
+- Example: Comfiguring a form
+```json
+{
+  "form": {
+    "fields": [
+      {
+        "label": "Name",
+        "type": "text",
+        "required": true
+      },
+      {
+        "label": "Email",
+        "type": "email",
+        "required": true
+      },
+      {
+        "label": "Age",
+        "type": "number",
+        "required": false
+      }
+    ]
+  }
+}
+```
+- By parsing this configuration file, the UI can dynamically render the form based on the specified settings
+
+## Dynamically binding to elemments in json and loop through it
+- we can loop elements of object using map()
+
+![alt text](image-6.png)
+
+- same can then ne used at appropriate places as below
+
+![alt text](image-8.png)
+
+
+## Each child in a list should have unique key prop - Warning
+- we must assign key value to each child element of list so that they cna be uniquely represented
+- key={}
+- key is a reserved word which needs unique value like "id" 
+![alt text](image-6.png)
+
+**OR another way**
+- use index which is second argument of map()- Not recommended
+- if order of items change, this can negatively impact performance abd may cause issues with component state.
+- it is considerd as Anti-Pattern
+
+![alt text](image-9.png)
+
+
+## why we need unique key
+- react optimizes its render cycle, so components need to have unique ids. 
+- say, if some new component comes up, DOM has to place that at required place. 
+- Using unique id, react will come to know what modification has been made. 
+- Rather than re-rendering all the components, it can identify the modification using key and renders ony that.
 
 
 

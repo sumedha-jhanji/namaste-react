@@ -1,0 +1,66 @@
+[
+    {
+      "id": "001",
+      "name": "Sumedha Food",
+      "cuisine": "North Indian, Biryani, Indian Street food...",
+      "rating": "4.3",
+      "timing": "35-40 minutes",
+      "location":"Zirakpur",
+      "image":"https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_660/ovmdm1aiba7rswfajjfw"
+    },
+    {
+      "id": "002",
+      "name": "Lazeez Rasoi",
+      "cuisine": "North Indian, Thalis, Chinese, Tandori...",
+      "rating": "3.8",
+      "timing": "30-35 minutes",
+      "location":"Sector 11",
+      "image":"https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_660/zyvbbkoyy9udew06j9fc"
+    },
+    {
+      "id": "003",
+      "name": "Biryani by Kilo",
+      "cuisine": "Hyderabad Biryani, Biryani, Veg Biryani",
+      "rating": "4.4",
+      "timing": "55-60 minutes",
+      "location":"Sector 21",
+      "image":"https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_660/RX_THUMBNAIL/IMAGES/VENDOR/2024/11/18/f0e771d6-40d1-42bb-b0a9-f9972b5780dd_457097.JPG"
+    },
+    {
+      "id": "004",
+      "name": "National Bakers",
+      "cuisine": "Bakery, Snacks, Sweets, Deserts",
+      "rating": "4.4",
+      "timing": "25-30 minutes",
+      "location":"lohgarh",
+      "image":"https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_660/yv2p6mjnnlpsel2jgzrc"
+    },
+    {
+      "id": "005",
+      "name": "Gopal's",
+      "cuisine": "North Indian,South Indian, Sweets",
+      "rating": "4.4",
+      "timing": "45-50 minutes",
+      "location":"Sector 20",
+      "image":"https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_660/RX_THUMBNAIL/IMAGES/VENDOR/2024/7/7/cebca7e4-c3a2-4952-9432-a6a8aa3d0dab_49586.jpg"
+    },
+    {
+      "id": "006",
+      "name": "Bombay Street",
+      "cuisine": "Maharashtrian snacks, Fast Foods...",
+      "rating": "4.4",
+      "timing": "35-40 minutes",
+      "location":"Panchkula",
+      "image":"https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_660/hsr9l0rfy9tqkh3xxelx"
+    },
+    {
+      "id": "007",
+      "name": "Grilled N Chilled",
+      "cuisine": "Beverages, Continental, Chinese",
+      "rating": "4.2",
+      "timing": "35-40 minutes",
+      "location":"Dhakoli",
+      "image":"https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_660/v2nfbiq2prffpmwhxian"
+    }
+  
+  ]

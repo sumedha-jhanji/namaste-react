@@ -1,0 +1,122 @@
+#heading{
+    color:red
+}
+
+#title{
+    color:green
+}
+
+.header{
+    display:flex;
+    justify-content: space-between;
+    height: 100px;
+    padding: 0px 60px;
+}
+
+.body{
+    background-color:#f0f0f0;
+    padding: 0px 30px;
+}
+
+.logo{
+    width: 90px;
+}
+
+.nav-items{
+    display: inline-flex;
+    padding: 0px 20px;
+}
+
+.nav-items > ul {
+    display: flex;
+    list-style-type: none;
+    font-size: 24px;
+}
+
+.nav-items > ul > li {
+    padding: 10px;
+    margin: 10px;
+}
+
+.nav-items > ul > li >img {
+    padding: 0px;
+    margin: 0px;
+}
+
+.cart{
+    height: 30px;
+}
+
+.cart-container{
+    display: flex;
+}
+
+.image-cart{
+    display: flex;
+}
+
+.res-card{
+    width:250px;
+    height: 300px;
+    padding: 5px;
+    margin: 10px;
+}
+
+.res-card:hover{
+    border: 1px solid grey;
+    cursor: pointer;
+}
+
+.search{
+    padding: 10px;
+}
+
+.res-logo{
+    width: 100%;
+    height: 50%;
+}
+
+.res-card-details{
+    display: flex;
+    color: grey;
+    letter-spacing: -0.3px;
+}
+
+.res-cuisines{
+    align-items: center;
+    gap: 2px;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.res-location{    
+    margin-bottom: 10px;
+}
+
+.res-start-image{
+    width: 50px;
+}
+
+.res-container{
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0px 35px;    
+}
+
+.search{
+    padding-top: 20px;
+    margin: 0px 35px;
+}
+.searchText{
+    width: 92%;
+    height: 30px;
+}
+
+.searchImage
+{
+    position: relative;
+    stroke: currentColor;
+    fill: #3d4152;
+    stroke-width: 0;  
+    margin-left: 5px;
+}
