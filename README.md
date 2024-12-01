@@ -508,22 +508,9 @@ const {resName, resCuisine, resRating, resTiming} = props
 - Rather than re-rendering all the components, it can identify the modification using key and renders ony that.
 
 ## Sample Project UI structure (Namaste-react App)
-/** Food App component
- * Header
- *    - Logo
- *    - Nav Items
- *  Body
- *    - Search
- *    - RestaurantContainer
- *      - Restaurant Card
- *        - image
- *        - name of res, star rating, cuisines, delivery time, cost
- * Footer
- *    - Copyright
- *    - Links
- *    - Address
- *    - Contact
- */
+
+![alt text](readme-images/image-13.png)
+
 
 
  ## Import and Export
