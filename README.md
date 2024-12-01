@@ -509,7 +509,7 @@ const {resName, resCuisine, resRating, resTiming} = props
 
 ## Sample Project UI structure (Namaste-react App)
 
-![alt text](readme-images/image-13.png)
+![alt text](readme_images/image-13.png)
 
 
 
