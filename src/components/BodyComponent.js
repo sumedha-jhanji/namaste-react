@@ -1,13 +1,37 @@
+import { useState } from "react";
 import RestaurantData from "../data/restaurantData.json";
-import RestaurantCardComponent from "./RestaurantCardComponent"
+import RestaurantCardComponent from "./RestaurantCardComponent";
 
 const BodyComponent = () => {
-    return (
-      <div className="body">
-        <div className="body-container">
+  
+  //local state variable - scope will be inside Bosy component
+  const[resData, setResData] = useState(RestaurantData);
+  const[searchVal, setSearchVal] = useState('');
+
+  const handleSearch = () => {
+    if(searchVal == null || searchVal == '')
+      setResData(RestaurantData);
+    else
+      setResData(resData.filter(r => r.data.name.toLowerCase().includes(searchVal.toLowerCase())))
+}
+
+  return (
+    <div className="body">
+      <div className="body-container">
+        <div className="filter">
+          <button
+            className="filter-btn"
+            onClick={() => {
+              setResData(resData.filter(
+                (res) => res.data.avgRating > 4
+              ));
+            }}
+          >
+            Top Rated Restaurants
+          </button>
           <div className="search">
-            <input type="text" className="searchText"></input>
-            <svg
+            <input type="text" className="searchText" value={searchVal} onChange={(event) => { setSearchVal(event.target.value)}}></input>
+            <svg onClick={handleSearch}
               className="searchImage"
               viewBox="5 -1 12 25"
               height="17"
@@ -18,17 +42,27 @@ const BodyComponent = () => {
             </svg>
             Search
           </div>
-          <div className="res-container">
-            {RestaurantData.map((restaurant) => (
-              <RestaurantCardComponent
-                key={restaurant.data.id}
-                resData={restaurant}
-              />
-            ))}
-          </div>
+        </div>
+        <div className="res-container">
+          {/* using static data and non dynamic page */}
+          {/* {RestaurantData.map((restaurant) => (
+            <RestaurantCardComponent
+              key={restaurant.data.id}
+              resData={restaurant}
+            />
+          ))} */}
+
+          {/* using dynamic UI */}
+          {resData.map((restaurant) => (
+            <RestaurantCardComponent
+              key={restaurant.data.id}
+              resData={restaurant}
+            />
+          ))}
         </div>
       </div>
-    );
-  };
+    </div>
+  );
+};
 
-  export default BodyComponent
+export default BodyComponent;

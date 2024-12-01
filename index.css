@@ -109,7 +109,7 @@
 }
 
 .searchText{
-    width: 91%;
+    width: 90%;
     height: 30px;
     padding-left: 10px;
 }
@@ -143,3 +143,12 @@
     font-weight: 500;
 }
 
+.filter{
+    display: flex;
+}
+
+.filter-btn{
+    margin: 10px;
+    cursor: pointer;
+    width: 20%;
+}

@@ -511,8 +511,6 @@ const {resName, resCuisine, resRating, resTiming} = props
 
 ![alt text](readme_images/image-13.png)
 
-
-
  ## Import and Export
 - **Export**
 - 2 types of export
@@ -542,6 +540,103 @@ const {resName, resCuisine, resRating, resTiming} = props
 - to import named exports, we need to use {} as below
 
  ![alt text](readme_images/image-10.png)
+
+
+# Make App Dynamic (interactive)
+- using features like Hooks, click handlers
+
+## Event handlers
+- handle events like click, mouseover etc
+- example -> onclick event on button.
+  - it will take callback function
+
+  ![alt text](readme_images/image-14.png)
+
+## React Hooks
+- normal JS utility function given to us by react
+- prebuilt
+- it has some logic at behind
+
+
+1. useState() 
+- used to generated State variables. 
+- Variable which has state of the component
+- used to add state to functional components.
+- way of 2 way binding even though react is unidirectional
+- it returns the state which is consumed in array.
+- it takes a default value which can be empty array, null, single value or list etc
+- to modfy state variable, we need to use a function which comes as 2nd parameter of useState array. This will trigger diff algorithm.
+- when ever state variable updates, react re-renders the component.
+
+```js
+import { useState } from "react";
+const[resData, setResData] = useState(RestaurantData); // array destructuring on fly
+```
+- imported like named import i.e using {}
+
+- **Example - we need to filter the list of restaurants wiith rating greater than 4 on click of button and show on UI (use case of useState())**
+- Steps
+  1. add click event to button
+
+  ![alt text](readme_images/image-14.png)
+
+  2. define state variable using useState()
+
+  ![alt text](readme_images/image-15.png)
+
+  3. use Set<variable> of useState to change state of the component
+
+  ![alt text](readme_images/image-16.png)
+
+  4. Binding your mapping component (RestaurantCardComponent) with state variable
+
+  ![alt text](readme_images/image-17.png)
+
+
+2. useEffect()
+- 
+
+
+
+## Diff algorithm & Reconciliation algorithm
+- **Diff algorithm**
+- Diff algorithm will find out then difference between 2 virtual DOMs(updated Virtual DOM and previous virtual DOM) and then will actually update the DOM.
+- This process is necessary because React uses a virtual DOM to improve performance by minimizing direct manipulation of the actual DOM.
+- Key Points:
+  - Virtual DOM: React creates a virtual representation of the real DOM. Whenever the state of a component changes, a new virtual DOM is created.
+  - Comparison: The diff algorithm compares the new virtual DOM with the previous version to identify changes.
+  - Efficiency: The algorithm is designed to be efficient, with an O(n) complexity, meaning it operates linearly relative to the number of elements.
+- Steps in Diffing:
+  - Element Type Change: If elements of different types are compared, React destroys the old tree and builds a new one from scratch.
+  - Key Usage: Keys are used to identify elements uniquely. This helps React efficiently update the list without re-rendering unchanged elements.
+  - Component Tree Comparison: The algorithm recursively compares the component tree. If the root elements are the same, it compares their attributes and children.
+
+- **Reconciliation alogorithm**
+- React uses Reconciliation alogorithm also known as React Fiber. Came in react 16.
+- Reconciliation alogorithm is the process React uses to update the DOM by applying the differences identified by the diff algorithm.
+- The goal is to update the UI efficiently by minimizing the number of changes to the actual DOM.
+- Key Points:
+  - Minimal DOM Manipulation: React applies only the necessary changes to the DOM to bring it to the desired state.
+  - Batch Updates: React batches multiple updates together to improve performance and avoid unnecessary re-renders.
+  - Lifecycle Methods: During reconciliation, React calls appropriate lifecycle methods like componentDidUpdate to manage component behavior.
+- Steps in Reconciliation:
+  - Element Update: If an element remains the same, React updates its attributes and children accordingly.
+  - Component Update: If a component remains the same, React updates its props and state, triggering re-renders only if necessary.
+  - Component Mounting/Unmounting: React mounts new components and unmounts old ones as per the diff algorithm's findings.
+
+- Example
+    - suppose we have DOM in which we have res-ccontainer which has say 15 res cards
+    - UI performs filtering and gets 3 cards.
+    - To update this in actual DOM
+      -  Firstly, react will create Virtual DOM(representation of actual DOM -> basically object of react elements) from actual DOM(HTML elements)
+      - Using diff algo, will identify the diff between old virtual DOM (containing 15 res cards) and new virtual DOM (contains 3 res cards)
+      - using Reconciliation alogo, will update the actual DOM by applying the diff identified. It will update DOM without re-rendering the unchanged items.
+
+  - **React Fiber Architecture**
+  https://github.com/acdlite/react-fiber-architecture
+    
+
+
 
 
  
