@@ -14,8 +14,8 @@ const RestaurantCardComponent = (props) => {
       avgRating,
       cuisines,
       costForTwo,
-      deliveryTime,
-    } = resData?.data;
+      sla,
+    } = resData?.info;
   
     return (
       <div className="res-card" style={styleCard}>
@@ -64,9 +64,9 @@ const RestaurantCardComponent = (props) => {
               </linearGradient>
             </defs>
           </svg>
-          {avgRating} stars • <span>{deliveryTime} minutes</span>
+          {avgRating} stars • <span>{sla?.slaString}</span>
         </div>
-        <div className="res-cost">₹{costForTwo / 100} FOR TWO</div>
+        <div className="res-cost">₹{costForTwo}</div>
       </div>
     );
   };

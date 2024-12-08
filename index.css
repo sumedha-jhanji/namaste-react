@@ -108,19 +108,23 @@
     overflow: hidden;
 }
 
-.searchText{
+.search-text{
     width: 90%;
     height: 30px;
     padding-left: 10px;
 }
 
-.searchImage
+.search-image
 {
     position: relative;
     stroke: currentColor;
     fill: #3d4152;
     stroke-width: 0;  
     margin-left: 5px;
+}
+
+.search-action{
+    cursor: pointer;
 }
 
 .res-rating{
@@ -151,4 +155,30 @@
     margin: 10px;
     cursor: pointer;
     width: 20%;
+}
+
+.shimmer-cards{
+    width: 350px;
+    height: 350px;
+    margin: 5px;
+    padding: 5px;    
+    border: 1px solid grey;
+}
+
+.shimmer-container{
+    flex-wrap: wrap;
+    justify-content: left;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    overflow: hidden;
+    container-type: inline-size;
+}
+
+.login{
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+    font-size: 20px;
 }

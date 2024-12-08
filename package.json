@@ -1,5 +1,6 @@
 {
   "name": "namaste-react",
+  "proxy": "https://localhost:1234/",
   "version": "1.0.0",
   "description": "This is Namaste React By Akshay Saini",
   "main": "app.js",
@@ -24,10 +25,11 @@
     "process": "^0.11.10"
   },
   "dependencies": {
+    "cors": "^2.8.5",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
-  "broswersList":[
-    "last 2 version" 
+  "broswersList": [
+    "last 2 version"
   ]
 }

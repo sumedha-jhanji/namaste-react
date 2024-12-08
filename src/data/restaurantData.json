@@ -1,7 +1,7 @@
 [
     {
       "type": "restaurant",
-      "data": {
+      "info": {
         "type": "F",
         "id": "334475",
         "name": "KFC",
@@ -128,7 +128,7 @@
 
     {
       "type": "restaurant",
-      "data": {
+      "info": {
         "type": "F",
        "id": "229",
         "name": "Meghana Foods",
@@ -255,7 +255,7 @@
     },
     {
       "type": "restaurant",
-      "data": {
+      "info": {
         "type": "F",
        "id": "121603",
         "name": "Kannur Food Point",
@@ -390,7 +390,7 @@
     },
     {
       "type": "restaurant",
-      "data": {
+      "info": {
         "type": "F",
        "id": "307050",
         "name": "Call Me Chow",
@@ -515,7 +515,7 @@
     },
     {
       "type": "restaurant",
-      "data": {
+      "info": {
         "type": "F",
        "id": "337335",
         "name": "Kannur food kitchen",
@@ -650,7 +650,7 @@
     },
     {
       "type": "restaurant",
-      "data": {
+      "info": {
         "type": "F",
        "id": "492159",
         "name": "Roti Wala",
@@ -770,7 +770,7 @@
     },
     {
       "type": "restaurant",
-      "data": {
+      "info": {
         "type": "F",
        "id": "65797",
         "name": "Leon's - Burgers & Wings (Leon Grill)",
@@ -895,7 +895,7 @@
     },
     {
       "type": "restaurant",
-      "data": {
+      "info": {
         "type": "F",
        "id": "425",
         "name": "Hotel Empire",
@@ -1015,7 +1015,7 @@
     },
     {
       "type": "restaurant",
-      "data": {
+      "info": {
         "type": "F",
        "id": "428",
         "name": "Biryani Pot",
@@ -1134,7 +1134,7 @@
     },
     {
       "type": "restaurant",
-      "data": {
+      "info": {
         "type": "F",
        "id": "306639",
         "name": "The Coorg Food Co.",
@@ -1259,7 +1259,7 @@
     },
     {
       "type": "restaurant",
-      "data": {
+      "info": {
         "type": "F",
        "id": "63957",
         "name": "Madeena Hotel",
@@ -1379,7 +1379,7 @@
     },
     {
       "type": "restaurant",
-      "data": {
+      "info": {
         "type": "F",
        "id": "71298",
         "name": "Bengali Fun Foods",
@@ -1504,7 +1504,7 @@
     },
     {
       "type": "restaurant",
-      "data": {
+      "info": {
         "type": "F",
        "id": "59593",
         "name": "Al Daaz",
@@ -1630,7 +1630,7 @@
     },
     {
       "type": "restaurant",
-      "data": {
+      "info": {
         "type": "F",
        "id": "5934",
         "name": "Burger King",
@@ -1765,7 +1765,7 @@
     },
     {
       "type": "restaurant",
-      "data": {
+      "info": {
         "type": "F",
        "id": "365010",
         "name": "Hotel Salam",

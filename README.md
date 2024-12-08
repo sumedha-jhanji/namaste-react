@@ -567,6 +567,11 @@ const {resName, resCuisine, resRating, resTiming} = props
 - it takes a default value which can be empty array, null, single value or list etc
 - to modfy state variable, we need to use a function which comes as 2nd parameter of useState array. This will trigger diff algorithm.
 - when ever state variable updates, react re-renders the component.
+- **why we need state variable**
+  - if we use local javascript variable, it will update the variable value if we update that but UI(component) won't get rendered.
+  - to refresh or re-render the UI, we use state variables.
+  - it is used to make the app dynamic
+  - render whole component and change only the updated element. All other component react elements will remain intact
 
 ```js
 import { useState } from "react";
@@ -584,7 +589,7 @@ const[resData, setResData] = useState(RestaurantData); // array destructuring on
 
   ![alt text](readme_images/image-15.png)
 
-  3. use Set<variable> of useState to change state of the component
+  3. use Set<variable> of useState to change state of the component-  - when we are calling set<variable> react is updating the variable name and calling/rendering the component once again. Variable will be a new variable now. New variable is created with the new value which has been updates using set function.
 
   ![alt text](readme_images/image-16.png)
 
@@ -594,9 +599,16 @@ const[resData, setResData] = useState(RestaurantData); // array destructuring on
 
 
 2. useEffect()
-- 
+- take 2 arguments
+  - arrow function/ callback function : called after your component renders
+  - dependency array: 
 
-
+```js
+import { useEffect } from "react";
+useEffect(() => {
+  console.log("callback function");
+}, [])
+```
 
 ## Diff algorithm & Reconciliation algorithm
 - **Diff algorithm**
@@ -630,11 +642,89 @@ const[resData, setResData] = useState(RestaurantData); // array destructuring on
     - To update this in actual DOM
       -  Firstly, react will create Virtual DOM(representation of actual DOM -> basically object of react elements) from actual DOM(HTML elements)
       - Using diff algo, will identify the diff between old virtual DOM (containing 15 res cards) and new virtual DOM (contains 3 res cards)
-      - using Reconciliation alogo, will update the actual DOM by applying the diff identified. It will update DOM without re-rendering the unchanged items.
+      - using Reconciliation alogo, will update the actual DOM by applying the diff identified. It will update DOM without re-rendering the unchanged items. It will render the whole component again which has been updated.
 
-  - **React Fiber Architecture**
-  https://github.com/acdlite/react-fiber-architecture
-    
+## **React Fiber Architecture**
+- https://github.com/acdlite/react-fiber-architecture
+
+
+## Approaches how web apps or UI applications fetch data from backend
+1. As soon as app loads, we can make api call to fetch data, wait for data to come and then render it on UI.
+2. As soon as page loads, we will quickly render UI, after render, we will make API call and when we get data, we will render data to our app.
+  - We will always use this approach in React
+  - provided better User experience as in first approach, it will block page for some time where as we load the page with skeleton and as soon as we get data, we render that on UI.
+  - React's render cycle is very fast so 2 times render doesn't affect the performance.
+  - we will useEffect() hook for this
+
+## How to read data from API
+- use fetch api provided by browser
+- fetch will return promise which can then be resolved either
+  - using .then()
+    **OR**
+  - using async await
+```js
+const fetchData = async() =>{
+  const data = await fetch("api url");
+
+  const json = await data.json();
+};
+```
+
+## CORS Policy
+- browsers blocks us to call api from one origin to another origin
+- way to bypass
+  - add browser extension for CORS (for dev environment)
+  - **OR**
+  - use corsproxy.io or we have other sites also for this. Just append  **https://corsproxy.io?** before url
+    - https://corsproxy.io?https://www.swiggy.com/dapi/restaurants/list/v5?lat=30.6601508&lng=76.8382204&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING
+    - it has a limit.
+  - **OR**
+  - if we have our own api, there we can use CORS middleware
+
+## Optional chaining (?.) 
+- is a feature in JavaScript that allows you to safely access deeply nested properties without having to check each level explicitly. This feature helps to avoid errors when accessing properties that might not exist.
+- You can also use optional chaining to call a function that might not exist.
+- Optional chaining can be useful when working with arrays and checking for elements at specific indices.
+
+- **How It Works**
+The optional chaining operator (?.) short-circuits and returns undefined if the value before it is null or undefined. This prevents runtime errors that occur when trying to access properties of null or undefined.
+
+- **Advantages**
+- Reduces Code Complexity: Simplifies the code by reducing the need for multiple checks for null or undefined.
+- Improves Readability: Makes the code cleaner and easier to read.
+- Prevents Errors: Helps avoid runtime errors caused by accessing properties of null or undefined.
+
+## Shimmer UI
+- resembles the page's actual UI, so users will understand how quickly the web or mobile app will load even before the contnt has shown up
+- it is like of kind, we load a fake page until we load actual data.
+- as soon as page load, load/render it with shimmer UI
+
+
+## Conditionl Rendering
+-Rendering on base of vondition is called conditional rendering
+
+![alt text](readme_images/image-18.png)
+
+## Key concept
+- say we have input box and we have binded local state variable to that. If we try to modfy input box, it won't be possible. This is because value of input box is strictly tied to variable. It will keep the old value intact unless we change the variable value using set<variable>
+- to resolve this we need to use onChange event handler
+
+```js
+const [searchText, setSearchText] = useState("");
+ <input
+              type="text"
+              className="search-text"
+              value={searchText}
+              onChange={(event) => {
+                setSearchText(event.target.value);
+              }}></input>
+```
+- **Note:** when we change local state variable(either we are typing anything in input box, making clal to api etc), Component gets re-rendered as react triggers a reconcilliation cycle
+
+- **Note: React will re-render the whole component but it is only updating the input box value in actual DOM**
+
+
+
 
 
 
