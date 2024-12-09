@@ -297,7 +297,6 @@ Namaste React
     - can handle events using methods within the class. These methods are bound to the component’s context
 
 ## Functional component
-- old way fo writting code
 - uses javascript functions
 - JavaScript functions that return JSX (JavaScript XML) and can accept props as arguments.
 - use hooks to maintain state, effects etc without writing classes
@@ -487,7 +486,7 @@ const {resName, resCuisine, resRating, resTiming} = props
 
 
 ## Each child in a list should have unique key prop - Warning
-- we must assign key value to each child element of list so that they cna be uniquely represented
+- we must assign key value to each child element of list so that they can be uniquely represented
 - key={}
 - key is a reserved word which needs unique value like "id" 
 
@@ -559,7 +558,7 @@ const {resName, resCuisine, resRating, resTiming} = props
 
 
 1. useState() 
-- used to generated State variables. 
+- used to generated State variables(local state variable inside functional component) 
 - Variable which has state of the component
 - used to add state to functional components.
 - way of 2 way binding even though react is unidirectional
@@ -597,18 +596,86 @@ const[resData, setResData] = useState(RestaurantData); // array destructuring on
 
   ![alt text](readme_images/image-17.png)
 
+- **Best parctices**
+- never create state variables outside of component.
+- try to call hooks on top of component (inside component)
+- Never create state vaiable inside condition/loops/functions. It is allowed in react but it will create inconsistency
 
 2. useEffect()
 - take 2 arguments
   - arrow function/ callback function : called after your component renders
-  - dependency array: 
-
+  - dependency array: changes the behavior of the render (optional)
+   
 ```js
 import { useEffect } from "react";
 useEffect(() => {
   console.log("callback function");
 }, [])
 ```
+
+- **when useEffect() is called**
+  - after every render of that omponent - default baehavior
+  - if no dependency array, useEffect will be called after every render.
+  ```js
+  import { useEffect } from "react";
+  useEffect(() => {
+    console.log("callback function");
+  })
+  ```
+
+  - if dependency array is empty i.e. [], useEffect will be called on only once on initial render(when componeent loads not on re-renders)
+  ```js
+  import { useEffect } from "react";
+  useEffect(() => {
+    console.log("callback function");
+  }, [])
+  ```
+
+  - if we pass some value in dependencu array, useEfect will called only when dependency changes
+  ```js
+  import { useEffect } from "react";
+  const[btnName, setBtnName] = useState("Login")
+  useEffect(() => {
+    console.log("callback function");
+  }, [btnName]);
+  ```
+
+3. useRouteError()
+- given by react-router-dom
+- used to hold the route errors
+- it gives more information/details about error
+
+```js
+const error = useRouteError()
+<h3>
+  {error.status}: {error.statusText} - {error.error.message}
+</h3>
+```
+
+4. useParams()
+- to read the parameters value
+```js
+- in route configuartion
+{
+  path: "/restaurants/:resId",
+  element: <RestaurantMenuComponent />,
+}
+
+- dynamic route link
+<Link
+  to={"/restaurants/" + restaurant.info.id}
+  key={restaurant.info.id}
+>
+  <RestaurantCardComponent
+    resData={restaurant}
+  />
+</Link>
+
+- use this in component where we want to use the parameters passed as querystring
+const { resId } = useParams();
+```
+
+
 
 ## Diff algorithm & Reconciliation algorithm
 - **Diff algorithm**
@@ -723,6 +790,145 @@ const [searchText, setSearchText] = useState("");
 
 - **Note: React will re-render the whole component but it is only updating the input box value in actual DOM**
 
+## Routing (https://reactrouter.com/home)
+- use react router dom library
+- npm i react-router-dom
+  - it has created an error page byitself which is displayed to user in case user goes for unconfigured route path.
+
+- **2 Types of routing in web apps**
+  - Client side: no netwrok calls. We already have components and just loads the same at specified location. In react, w eare implementing this type of routing
+  - Server Side: you go for navigation link, network call gets fired and it will get HTML from server and render the whole page
+
+- **Steps**
+- **Ist way**
+  - create routing configuartion
+  ```js
+  import { createBrowserRouter } from "react-router-dom"; // createBrowserRouter will create routing cofiguration for us
+
+  const appRouter = createBrowserRouter([
+    {
+      path: '/',
+      element: <AppLayout />,
+    },
+    {
+      path: '/about',
+      element: <AboutComponent />,
+    },
+  ]);
+  ```
+
+  - next we need to provide this configuration to render it.
+    - use RouterProvider component provided by react router dom
+    ```js
+    import { createBrowserRouter, RouterProvider } from "react-router-dom";
+    root.render(<RouterProvider router={appRouter}></RouterProvider>)
+    ```
+
+- **2nd Way**
+```js
+import { BrowserRouter, Routes, Route } from "react-router";
+root.render(
+  <BrowserRouter>
+    <Routes>
+      <Route path="/" element={<AppLayout />} />
+      <Route path="/about" element={<AboutComponent />} />
+    </Routes>
+  </BrowserRouter>
+);
+```
+
+- to show custom error page, we can provide errorElement in route
+```js
+ {
+    path: "/",
+    element: <AppLayout />,
+    errorElement:<ErrorComponent />
+  },
+```
+
+## Children routes
+- say we want header component tto remain intact and body component will get replaced with other route components
+- for this we need to define child routes using children as below
+```js
+const appRouter = createBrowserRouter([
+  {
+    path: "/",
+    element: <AppLayout />,
+    children: [
+      {
+        path: "/",
+        element: <BodyComponent />,
+      },
+      {
+        path: "/about",
+        element: <AboutComponent />,
+      },
+      {
+        path: "/contact",
+        element: <ContactComponent />,
+      }
+    ],
+    errorElement: <ErrorComponent />, // for custok error page
+  }
+]);
+```
+- use outlet from react-router-dom
+```js
+import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
+const AppLayout = () => {
+  return (
+    <div className="app">
+      <HeaderComponent />
+      <Outlet /> {/* won't be visible in the html */}
+    </div>
+  );
+};
+```
+
+- link the routers to elements for navigation
+  - don't use <a></a> as it will refersh whole page
+  - rather use ink **component**. We can navigate the page without reloading. It will just refresh the component as react app is SPA. Behind the scene, it is converting into anchor tag when rendered. Link is a wrapper over anchor tag
+```js
+import { Link } from "react-router-dom";
+
+<div className="header">
+  <div className="logo-container">
+    <img className="logo" src={Logo}></img>
+  </div>
+  <div className="nav-items">
+    <ul>
+      <li>
+        <Link to="/">Home</Link>
+      </li>
+      <li>
+        <Link to="/about">About</Link>
+      </li>
+      <li>
+        <Link to="/contact">Contact Us</Link>
+      </li>
+      <li className="image-cart">
+        Cart <img className="cart" src={Cart}></img>
+      </li>
+      <li>
+        <button className="login" onClick={handleBtnName}>
+          {btnName}
+        </button>
+      </li>
+    </ul>
+  </div>
+</div>
+```
+
+## Dynamic Routing
+- example in swiggy we are having list of restaurants, now we click a specific restaurant, this is done using dynamic route. In this we will make API call
+- in route configuartion , we need to specify the dynamic value using ":"
+```js
+{
+  path: "/restaurants/:resId",
+  element: <RestaurantMenuComponent />,
+} // here :resId is dynamic which will be the id of selected restaurant
+```
+- 
 
 
 

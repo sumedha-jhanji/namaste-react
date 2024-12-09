@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 // import RestaurantData from "../data/restaurantData.json";
 import RestaurantCardComponent from "./RestaurantCardComponent";
 import ShimmerComponent from "./ShimmerComponent.js";
+import { Link } from "react-router-dom";
 
 const BodyComponent = () => {
   //local state variable - scope will be inside Bosy component
@@ -17,11 +18,11 @@ const BodyComponent = () => {
   //fetch data using fetch api provided by browser
   const fetchData = async () => {
     const data = await fetch(
-      "https://www.swiggy.com/dapi/restaurants/list/v5?lat=30.6601508&lng=76.8382204&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"      
+      "https://www.swiggy.com/dapi/restaurants/list/v5?lat=30.6601508&lng=76.8382204&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
     );
 
     const json = await data.json();
-    
+
     //optional chaining (?)
     setResData(
       json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants
@@ -57,7 +58,9 @@ const BodyComponent = () => {
           <button
             className="filter-btn"
             onClick={() => {
-              setfilteredResData(resData.filter((res) => res.info.avgRating > 4));
+              setfilteredResData(
+                resData.filter((res) => res.info.avgRating > 4)
+              );
             }}
           >
             Top Rated Restaurants
@@ -73,9 +76,11 @@ const BodyComponent = () => {
             ></input>
             <div
               className="search-action"
-              onClick={() =>{
+              onClick={() => {
                 // filter the restauraunt cards and update the UI
-                const filteredResData =  resData.filter(res => res.info.name.toLowerCase().includes(searchText.toLowerCase()));
+                const filteredResData = resData.filter((res) =>
+                  res.info.name.toLowerCase().includes(searchText.toLowerCase())
+                );
                 setfilteredResData(filteredResData);
               }}
             >
@@ -104,10 +109,14 @@ const BodyComponent = () => {
           {/* using dynamic UI */}
           {filteredResData.map((restaurant) => (
             //console.log(restaurant.info.cloudinaryImageId)
-            <RestaurantCardComponent
+            <Link
+              to={"/restaurants/" + restaurant.info.id}
               key={restaurant.info.id}
-              resData={restaurant}
-            />
+            >
+              <RestaurantCardComponent
+                resData={restaurant}
+              />
+            </Link>
           ))}
         </div>
       </div>
