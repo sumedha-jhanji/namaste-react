@@ -1,38 +1,15 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 // import RestaurantData from "../data/restaurantData.json";
 import RestaurantCardComponent from "./RestaurantCardComponent";
 import ShimmerComponent from "./ShimmerComponent.js";
 import { Link } from "react-router-dom";
+import useOnlineStatus from "../utils/useOnlineStatus.js";
+import useRestaurantsList from "../utils/useRestaurantsList.js";
 
 const BodyComponent = () => {
   //local state variable - scope will be inside Bosy component
-  const [resData, setResData] = useState([]);
-  const [filteredResData, setfilteredResData] = useState([]);
   const [searchText, setSearchText] = useState("");
-
-  //useEffect Hook
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  //fetch data using fetch api provided by browser
-  const fetchData = async () => {
-    const data = await fetch(
-      "https://www.swiggy.com/dapi/restaurants/list/v5?lat=30.6601508&lng=76.8382204&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
-    );
-
-    const json = await data.json();
-
-    //optional chaining (?)
-    setResData(
-      json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants
-    );
-
-    //filtered records
-    setfilteredResData(
-      json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants
-    );
-  };
+  const [resData, filteredResData] = useRestaurantsList();
 
   //conditional rendering
   // if (resData.length == 0)
@@ -43,6 +20,13 @@ const BodyComponent = () => {
   //       </div>
   //     </div>
   //   );
+
+  const onlineStatus = useOnlineStatus();
+
+  if (onlineStatus === false)
+    return (
+      <h1>Looks like you are offline!! Please check your internet connection.</h1>
+    );
 
   // OR using ternary operator
   return resData.length == 0 ? (
@@ -113,9 +97,7 @@ const BodyComponent = () => {
               to={"/restaurants/" + restaurant.info.id}
               key={restaurant.info.id}
             >
-              <RestaurantCardComponent
-                resData={restaurant}
-              />
+              <RestaurantCardComponent resData={restaurant} />
             </Link>
           ))}
         </div>

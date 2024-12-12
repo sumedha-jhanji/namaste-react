@@ -1,4 +1,4 @@
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import ReactDOM from "react-dom/client";
 import HeaderComponent from "./components/HeaderComponent";
 import BodyComponent from "./components/BodyComponent";
@@ -22,6 +22,8 @@ const AppLayout = () => {
   );
 };
 
+const Grocery = lazy(() => import("./components/GroceryComponent"));
+
 const appRouter = createBrowserRouter([
   {
     path: "/",
@@ -40,9 +42,17 @@ const appRouter = createBrowserRouter([
         element: <ContactComponent />,
       },
       {
+        path: "/grocery",
+        element: (
+          <Suspense fallback={<h1>Loading....</h1>}>
+            <Grocery />
+          </Suspense>
+        ),
+      },
+      {
         path: "/restaurants/:resId",
         element: <RestaurantMenuComponent />,
-      }
+      },
     ],
     errorElement: <ErrorComponent />, // for custok error page
   },

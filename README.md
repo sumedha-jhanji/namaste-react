@@ -690,6 +690,44 @@ const error = useRouteError()
 const { resId } = useParams();
 ```
 
+5. Custom Hooks
+- use to add mote modularity to the project.
+- enhance more readability
+- make code more reusable
+- adding abstraction to custom code (hiding the implementation)
+- best practice 
+  - create new file separately for each hook
+  - always create hook file starting with "use", react will understand that it is hook
+- **Steps to create Custom Hooks**
+  - create a new file whose name starts with "use"
+  - add the logic
+  - export it
+  - use it just like the other hooks
+  ```js
+  import { useEffect, useState } from "react";
+  import { MENU_API } from "../utils/constants";
+
+  const useRestaurantMenu = (resId) => {
+    const [resInfo, setResInfo] = useState(null);
+    useEffect(() => {
+      fetchMenu();
+    }, []);
+
+    const fetchMenu = async () => {
+      const data = await fetch(MENU_API + resId);
+      const json = await data.json();
+      setResInfo(json.data);
+    };
+
+    return resInfo;
+  };
+
+  export default useRestaurantMenu;
+  ```
+  - in component that neefds to use it
+  ```js
+  const resInfo = useRestaurantMenu(resId); // called custom hook
+  ```
 
 
 ## Diff algorithm & Reconciliation algorithm
@@ -1108,11 +1146,67 @@ async componentDidMount() {
 - say we have defined setInterval() in component did mount, now we move from one component to another and so on. It will initiate multiple setInterval in backend. So to clear that out when we leave the component, we need componentWillUnmount(): it is used to clear the resources which are occupying the resource not needed once we leave the components
 
 
+# Custome Hooks examples
+
+## Check internet status
+- we need to add the event listener provided on windows  (online/offline)
+```js
+import { useEffect, useState } from "react";
+
+const useOnlineStatus = () => {
+  const [onlineStatus, setOnlineStatus] = useState(true);
+
+  // becuase need to add event listener only once
+  useEffect(()=>{
+    
+  //check if online or not, for that we need to adde event listener
+    window.addEventListener("online",() =>{
+        setOnlineStatus(true);
+    });
+
+    window.addEventListener("offline",() =>{
+        setOnlineStatus(false);
+    });
+  },[])
+
+  //return boolean value
+  return onlineStatus;
+};
+
+export default useOnlineStatus;
+```
 
 
+## Chunking / Code Splitting / Dynamic bundling / Lazy loading / On Demand Loading
+- Say we have large scale app, so when we create dev/prod buid, parcel will create single js file. 
+- it is ok in case of small apps but for larger apps with lot of components, we should create small bundles so that they can be fastly loaded on browers.
+- that process of creating small bundles is called chunking
+- initially component is not loaded
+- we will do using lazy laoding
 
- 
-
+- **Steps**
+  1. import lazy from react: lazy is named export function, it takes call back function
+  ```js
+  import React,{lazy} from "react";
+  ```
+  2. use lazy with callback function
+  ```js
+  const Grocery = lazy(() => import("./components/GroceryComponent")); // import is a function here and it will take path of the component need to be loaded
+  ```
+  3. we need to use suspense: it is a component
+  - as we now are requesting a component to load dynamically. so there will be state (due to component getting loaded dynamically) when the component is not avaiable might be for very few milliseconds. As a result, react will suspend the rendering and will throw error
+  - that can be resolved with Suspense component
+  - fallback is place holder where we provide the value which we want to display during that state when component is laoding in case of lazy loading
+  ```js
+  {
+    path: "/grocery",
+    element: (
+      <Suspense fallback={<h1>Loading....</h1>}>
+        <Grocery />
+      </Suspense>
+    ),
+  }
+  ```
 
 
 

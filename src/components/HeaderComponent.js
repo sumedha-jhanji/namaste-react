@@ -2,9 +2,11 @@ import Logo from "../images/food_logo.jpg";
 import Cart from "../images/cart.jpg";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import useOnlineStatus from "../utils/useOnlineStatus";
 
 const HeaderComponent = () => {
   const [btnName, setBtnName] = useState("Login");
+  const onlineStatus = useOnlineStatus();
 
   const handleBtnName = () => {
     if (btnName.toLowerCase() == "login") setBtnName("Logout");
@@ -18,6 +20,7 @@ const HeaderComponent = () => {
       </div>
       <div className="nav-items">
         <ul>
+          <li>Online Status: {onlineStatus ? "✅" : "🔴"}</li>
           <li>
             <Link to="/">Home</Link>
           </li>
@@ -26,6 +29,9 @@ const HeaderComponent = () => {
           </li>
           <li>
             <Link to="/contact">Contact Us</Link>
+          </li>
+          <li>
+            <Link to="/grocery">Grocery</Link>
           </li>
           <li className="image-cart">
             Cart <img className="cart" src={Cart}></img>
