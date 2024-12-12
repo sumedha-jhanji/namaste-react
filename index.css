@@ -182,3 +182,18 @@
     background-color: transparent;
     font-size: 20px;
 }
+
+.user-card{
+    padding: 10px;
+    border: 1px solid black
+}
+
+.avatar
+{
+    padding-left: 10px;
+    width: 100px;
+}
+
+.user-card{
+    width: 400px;
+}
