@@ -1176,7 +1176,6 @@ const useOnlineStatus = () => {
 export default useOnlineStatus;
 ```
 
-
 ## Chunking / Code Splitting / Dynamic bundling / Lazy loading / On Demand Loading
 - Say we have large scale app, so when we create dev/prod buid, parcel will create single js file. 
 - it is ok in case of small apps but for larger apps with lot of components, we should create small bundles so that they can be fastly loaded on browers.
@@ -1207,6 +1206,67 @@ export default useOnlineStatus;
     ),
   }
   ```
+
+# CSS
+## Ways to write css
+1. traditional way using .css file, attributes like className
+2. use SASS (writing css with some super powers) or SCSS : not recommended with large projects.
+3. Styled Components : mostly used with react applications by various companies (https://styled-components.com/)
+```js
+import styled from 'styled-components'
+const Button = styled.button`
+  background: transparent;
+  border-radius: 3px;
+  border: 2px solid #BF4F74;
+  color: #BF4F74;
+  margin: 0 1em;
+  padding: 0.25em 1em;
+`
+```
+4. using css libraries and frameworks: provide pre-build components
+  a. Material UI (MUI)
+  b. Bootstrap
+  c. Chakra UI
+  d. Ant design
+5. Tailwind CSS (today trending one) : Generic CSS framework: Rapidly bbuild moder websites without ever leaving your HTML/JSX
+
+## Tailwind (https://tailwindcss.com/docs/guides/parcel)
+- it is very light weight, when parcel will make bundle of CSS, it will only include css that is required in app not the whole tailwind css available
+  - like if we have not used shadow, it will not include shadow css.
+  - if you are using say m-4 100 times, it will just import only one m-4 class in bundle
+- we can build complex app
+- we can define css to handle various screen sizes
+- we can easily apply light dark theme
+
+- **Steps to use it in React**
+  - since we are using parcel, so go to tailwind site -> Docs -> Get Started -> choose "Framework Guides" -> choose Parcel
+  - Run commands to install tailwindcss and postcss(a tool to transform a css with javascript)
+  ```js
+  npm install -D tailwindcss postcss
+  npx tailwindcss init // initializing tailwind in app, it will create new file tailwind.config.js (cionfiguration file)
+  ```
+  - Configure PostCSS: Create a .postcssrc file in your project root, and enable the tailwindcss plugin
+  ```js
+  {
+  "plugins": {
+    "tailwindcss": {}
+  }
+  }
+  ```
+  - Configure your template paths: Add the paths to all of your template files in your tailwind.config.js file.
+  ```js
+  content: [
+    "./src/**/*.{html,js,ts,jsx,tsx}", // list of all files where we are going to use tailwind
+  ],
+  ```
+
+  - now start using classNames for UI look (we can install "Tailwind CSS IntelliSense" for help)
+
+  ## Disadvantags of Tailwind
+  - it some trime slooks ugly if try to use it prrbuilt components
+  - it needs some learning curve before using it
+
+
 
 
 

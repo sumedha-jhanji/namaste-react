@@ -18,18 +18,18 @@ const RestaurantCardComponent = (props) => {
     } = resData?.info;
   
     return (
-      <div className="res-card" style={styleCard}>
+      <div className="m-4 p-4 w-[350px] rounded-lg bg-gray-100 hover:bg-gray-200">
         <img
-          className="res-logo"
+          className="rounded-lg h-60 w-full"
           alt="res-logo"
           src={
             CDN_URL +
             cloudinaryImageId
           }
         />
-        <h3>{name}</h3>
-        <div className="res-cuisines">{cuisines.join(", ")}</div>
-        <div className="res-rating">
+        <h3 className="font-bold pt-3 text-lg">{name}</h3>
+        <h4>{cuisines.join(", ")}</h4>
+        <h4 className="flex">
           <svg
             width="20"
             height="20"
@@ -64,9 +64,9 @@ const RestaurantCardComponent = (props) => {
               </linearGradient>
             </defs>
           </svg>
-          {avgRating} stars • <span>{sla?.slaString}</span>
-        </div>
-        <div className="res-cost">₹{costForTwo}</div>
+          <div className="px-4">{avgRating} stars • <span>{sla?.slaString}</span></div>
+        </h4>
+        <h4>{costForTwo}</h4>
       </div>
     );
   };
