@@ -1266,6 +1266,68 @@ const Button = styled.button`
   - it some trime slooks ugly if try to use it prrbuilt components
   - it needs some learning curve before using it
 
+# Testing
+## Types
+- Manual testing
+- using libraries write test cases which will test code automatically
+  - types
+    - Unit testing: test react component(s) in isolation example we want to just test header component. we will write test cases only to verify that it got properly rendered and functioning
+    - Integration Testing: testing the integration of components. Test some particular flow composed of few components
+    - End to End testing (e2e) : testing react from say user landing on to the app till he logouts (through out the app)
+   
+## libraries
+- react testing library (https://testing-library.com/docs/react-testing-library/intro/)
+  - builds on top of DOM Testing Library by adding APIs for working with React components.
+  - already integrated if we have created app using create-react-app
+  - uses JEST (https://jestjs.io/)
+    - delightful Javascript Testing Framework with a focus on simplicity
+    - it inturn uses babel
+      
+## steps to use react testing library
+- npm install -D @testing-library/react   : install react testing library
+- npm install -D jest   : install jest
+- npm install --save-dev babel-jest @babel/core @babel/preset-env   : install other babel dependencies
+- configure babel (babel.config.js)
+```js
+module.exports = {
+  presets: [['@babel/preset-env', {targets: {node: 'current'}}]],
+};
+```
+- since parcel internally uses babel, so it will conflict with our above babel configuration. so we need to configure parcel file to disable parcel babel configuration (read "https://parceljs.org/languages/javascript/" -> "babel/usage with other tools" part)
+  - create .parcelrc file
+  ```js
+  {
+    "extends": "@parcel/config-default",
+    "transformers": {
+      "*.{js,mjs,jsx,cjs,ts,tsx}": [
+        "@parcel/transformer-js",
+        "@parcel/transformer-react-refresh-wrap"
+      ]
+    }
+  }
+  ```
+  - npx jest --init    : do jest consfiguration
+      - for test environment choose "jsdom (browser-like) : since test cases are not running on browser, they need runtime to execute it, we use jsdom - library which parses and interacts wth assembled HTML just like browser)
+- npm install --save-dev jest-environment-jsdom    : install jsdom library for jest 28
+- create folder say under src/components names "__tests__" OR create file name *.(spec|test.[jt]s"
+- **Note:** __ is know as dunder (dunder tests), used as reserved word
+- use "test(string, callback function)" to start writing a test case
+
+```js
+sum.js
+export const sum = (a, b) =>{
+return a+b
+}
+```
+
+```js
+sum.spec.js
+test("sum of 2 numbers",() ={
+  const result = sum(3, 4);
+  //assertion
+  expect(result).toBe(7);
+})
+```
 
 
 
