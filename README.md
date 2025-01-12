@@ -1329,6 +1329,122 @@ test("sum of 2 numbers",() ={
 })
 ```
 
+## Unit Testing - react component
+- firstly to test any component, we need to render that component first in to JSDOM
+- to check if component rendered or not, we use "SCREEN" object from react-testing library
+- install library **"npm install -D @babel/preset-react"** to allow jsx inside the test cases. It helps to convert jsx code to normal html code
+- also include  @babel/preset-react inside babel.config.js
+```js
+babel.config.js
+const { runtime } = require("./jest.config");
+
+module.exports = {
+  presets: [
+      ['@babel/preset-env', {targets: {node: 'current'}}],
+      ['@babel/preset-react',{runtime: "automatic"}]
+  ],
+
+};
+```
+
+- install a library for "tobeInTheDocument()" to work. Library **@testing-library/jest-dom**
+``` js
+const { render, screen } = require("@testing-library/react")
+const { default: ContactComponent } = require("../ContactComponent")
+import '@testing-library/jest-dom'; // include jest-dom for "toBeInTheDocument"
+
+test("Should load contact us component", () =>{
+    //rendered component in JSDOM
+    render(<ContactComponent />);
+
+    //get all the headings from component using "Screen" object of react-testing library
+    const heading = screen.getByRole("heading");
+
+    //it will verify, whether the heading is there in document or not.
+    //Assertion
+    expect(heading).toBeInTheDocument();
+});
+
+test("Should load button inside contact us component", () =>{
+    render(<ContactComponent />);
+
+    const button = screen.getByRole("button");
+    //Assertion
+    expect(button).toBeInTheDocument();
+});
+
+test("Should load button inside contact us component by text", () =>{
+    render(<ContactComponent />);
+    
+    const button = screen.getByText("Submit");
+    //Assertion
+    expect(button).toBeInTheDocument();
+});
+
+test("Should load input name inside contact us component", () =>{
+    render(<ContactComponent />);
+    
+    const input = screen.getByPlaceholderText("name");
+    //Assertion
+    expect(input).toBeInTheDocument();
+});
+
+test("Should load 2 input boxes inside contact us component", () =>{
+    render(<ContactComponent />);
+    //Querying
+    const inputBoxes = screen.getAllByRole("textbox");
+    //Assertion
+    expect(inputBoxes.length).toBe(2)
+});
+
+test("example of not toBe (inverse)", () =>{
+    render(<ContactComponent />);
+    
+    //Querying
+    const inputBoxes = screen.getAllByRole("textbox");
+    //Assertion
+    expect(inputBoxes.length).not.toBe(3)
+});
+```
+
+- if we do console.log() in test case, it will return JSX element/ react fiber node.
+
+## Group test cases
+- describe()
+```js
+describe("", () =>{
+  test("", () =>{});
+  test("", () =>{});
+  describe("",() =>{
+     test("", () =>{});
+     test("", () =>{});
+  })
+});
+
+describe("", () =>{
+  test("", () =>{});
+  test("", () =>{});
+  describe("",() =>{
+     test("", () =>{});
+     test("", () =>{});
+  })
+});
+
+```
+
+- we can also use "it()" in place of "test()".  it is alias of test
+
+```js
+describe("Contact Us Test cases", () =>{
+
+    test("Should load contact us component", () =>{        
+    });
+    
+    it("example of not toBe (inverse)", () =>{        
+    });
+});
+```
+
 
 
 
