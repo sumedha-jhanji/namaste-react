@@ -1329,7 +1329,7 @@ test("sum of 2 numbers",() ={
 })
 ```
 
-## Unit Testing - react component
+## UNIT TESTING - react component
 - firstly to test any component, we need to render that component first in to JSDOM
 - to check if component rendered or not, we use "SCREEN" object from react-testing library
 - install library **"npm install -D @babel/preset-react"** to allow jsx inside the test cases. It helps to convert jsx code to normal html code
@@ -1432,6 +1432,25 @@ describe("", () =>{
 
 ```
 
+- we have few helper functions that can run before or after test case. Usecase - we need to perform any use case
+```js
+beforeAll(() =>{
+      console.log("run this function before all the tests");
+  });
+
+  beforeEach(() =>{
+      console.log("run this function before each test");
+  });
+
+  afterAll(() =>{
+      console.log("run this function after all the tests");
+  });
+
+  afterEach(() =>{
+      console.log("run this function after each test");
+  });
+```
+
 - we can also use "it()" in place of "test()".  it is alias of test
 
 ```js
@@ -1442,6 +1461,292 @@ describe("Contact Us Test cases", () =>{
     
     it("example of not toBe (inverse)", () =>{        
     });
+});
+```
+
+- for static file like jpg etc
+  - install "jest-transform-stub' package
+  - in jest.config.js file, add -> moduleNameMapper:{"\\.(jpg|jpeg|png|gif|svg)$": "jest-transform-stub"}
+ 
+- for router settings
+  - add react router dom reference
+  - wrap a component with BrowserRouter
+ 
+- for click event to test
+  - use fireEvent of "@testing-library/react"
+    
+  ```js
+  const { render, screen, fireEvent } = require("@testing-library/react");
+  it("Should change Login button to Logout on click", () => {
+    render(
+      <BrowserRouter>
+        <HeaderComponent />
+      </BrowserRouter>
+    );
+  
+    const loginButton = screen.getByRole("button", {name: "Login"}); 
+  
+    fireEvent.click(loginButton);
+
+    const logoutButton = screen.getByRole("button", {name: "Logout"}); 
+    expect(logoutButton).toBeInTheDocument();
+
+  });
+  ```
+
+- Example
+```js
+const { render, screen, fireEvent } = require("@testing-library/react");
+const { default: HeaderComponent } = require("../HeaderComponent");
+import "@testing-library/jest-dom";
+import { BrowserRouter } from "react-router-dom";
+// for redux usage
+// import { Provider } from "react-redux";
+// import appStore from "../../utils/appStore";
+
+it("Should render Header Component with a login button", () => {
+  render(
+    <BrowserRouter>
+      {/* <Provider store={appStore}> for redux usage*/}
+      <HeaderComponent />
+      {/* </Provider>  */}
+    </BrowserRouter>
+  );
+
+  const loginButton = screen.getByRole("button", { name: "Login" });
+
+  //Assertion
+  expect(loginButton).toBeInTheDocument();
+});
+
+it("Should render Header Component with cart items as 0", () => {
+  render(
+    <BrowserRouter>
+      <HeaderComponent />
+    </BrowserRouter>
+  );
+
+  const cartItems = screen.getByText("Cart");
+
+  //Assertion
+  expect(cartItems).toBeInTheDocument();
+});
+
+it("Should render Header Component with a Cart item ", () => {
+  render(
+    <BrowserRouter>
+      <HeaderComponent />
+    </BrowserRouter>
+  );
+
+  const cartItems = screen.getByText(/Cart/); // regex
+
+  expect(cartItems).toBeInTheDocument();
+});
+
+it("Should change Login button to Logout on click", () => {
+    render(
+      <BrowserRouter>
+        <HeaderComponent />
+      </BrowserRouter>
+    );
+  
+    const loginButton = screen.getByRole("button", {name: "Login"}); 
+  
+    fireEvent.click(loginButton);
+
+    const logoutButton = screen.getByRole("button", {name: "Logout"}); 
+    expect(logoutButton).toBeInTheDocument();
+
+  });
+  
+```
+
+- How to pass props to test component
+  - use mock
+  - create a file with mock data
+  - import that in the test file
+  ```js
+  const { render, screen } = require("@testing-library/react");
+  const { default: RestaurantCardComponent } = require("../RestaurantCardComponent")
+  import MOCK_DATA from "../mocks/resDataMock.json";
+  import "@testing-library/jest-dom";
+  
+  it("should render restaurant card component with props data", () =>{
+      render(<RestaurantCardComponent resData={MOCK_DATA} />);
+      const resName = screen.getByText("Pizza Hut");
+  
+      expect(resName).toBeInTheDocument();
+  });
+  ```
+
+  ```js
+  resDataMock.json file
+  {
+          "id": "361958",
+          "name": "Pizza Hut",
+          "cloudinaryImageId": "RX_THUMBNAIL/IMAGES/VENDOR/2024/7/17/5c79762d-edf5-4398-8ea3-3536708135d4_361958.jpg",
+          "locality": "Sector 5",
+          "areaName": "Baltana Zirakpur",
+          "costForTwo": "₹350 for two",
+          "cuisines": [
+              "Pizzas"
+          ],
+          "avgRating": 4.1,
+          "parentId": "721",
+          "avgRatingString": "4.1",
+          "totalRatingsString": "1.8K+",
+          "sla": {
+              "deliveryTime": 23,
+              "lastMileTravel": 1.5,
+              "serviceability": "SERVICEABLE",
+              "slaString": "20-25 mins",
+              "lastMileTravelString": "1.5 km",
+              "iconType": "ICON_TYPE_EMPTY"
+          },
+          "availability": {
+              "nextCloseTime": "2025-01-15 00:00:00",
+              "opened": true
+          },
+          "badges": {},
+          "isOpen": true,
+          "type": "F",
+          "badgesV2": {
+              "entityBadges": {
+                  "imageBased": {},
+                  "textBased": {},
+                  "textExtendedBadges": {}
+              }
+          },
+          "aggregatedDiscountInfoV3": {
+              "header": "₹175 OFF",
+              "subHeader": "ABOVE ₹999",
+              "discountTag": "FLAT DEAL"
+          },
+          "orderabilityCommunication": {
+              "title": {},
+              "subTitle": {},
+              "message": {},
+              "customIcon": {}
+          },
+          "differentiatedUi": {
+              "displayType": "ADS_UI_DISPLAY_TYPE_ENUM_DEFAULT",
+              "differentiatedUiMediaDetails": {
+                  "mediaType": "ADS_MEDIA_ENUM_IMAGE",
+                  "lottie": {},
+                  "video": {}
+              }
+          },
+          "reviewsSummary": {},
+          "displayType": "RESTAURANT_DISPLAY_TYPE_DEFAULT",
+          "restaurantOfferPresentationInfo": {},
+          "externalRatings": {
+              "aggregatedRating": {
+                  "rating": "4.4",
+                  "ratingCount": "7"
+              },
+              "source": "GOOGLE",
+              "sourceIconImageId": "v1704440323/google_ratings/rating_google_tag"
+          },
+          "ratingsDisplayPreference": "RATINGS_DISPLAY_PREFERENCE_SHOW_SWIGGY"
+      
+  }
+  ```
+
+  ## INTEGRATION TESTING
+  - Like search feature in our app, rqquires lot of components to test together. So we write integration test cases.
+  - if component uses fetch, it is currently not available on JSDOM as fetch is browser super power not of JSDOM(Browser like not a borwser).
+  - To resolve this we need to mock fetch function
+    - use global object and add fetch function to it using jest.fn(). It takes a callback
+    - fetch function returns promise which in turn takes json which in turn returns promise which provides data. So we need to mock that, we need to return Promise from fake fetch function
+    - we need to wrap test case callback in act() which needs await and async
+    ```js
+    import { act } from "react";
+    
+    global.fetch = jest.fn(() => {
+    return Promise.resolve({
+      json: () => {
+        return Promise.resolve(MOCK_DATA);
+      },
+    });
+    });
+    
+    it("Should Search Res List for burger text input ", async () => {
+      await act(async () =>
+        render(
+          <BrowserRouter>
+            <Body />
+          </BrowserRouter>
+        )
+      );
+    });
+    ```
+
+- example of Integration testing (Search Bar functionality)
+```js
+import { fireEvent, render, screen } from "@testing-library/react";
+import { act } from "react";
+import BodyComponent from "../BodyComponent";
+import MOCK_DATA from "../mocks/resDataListMock.json";
+import { BrowserRouter } from "react-router-dom";
+import "@testing-library/jest-dom";
+
+global.fetch = jest.fn(() => {
+  return Promise.resolve({
+    json: () => {
+      return Promise.resolve(MOCK_DATA);
+    },
+  });
+});
+
+it("Should Search Res List for pizza text input ", async () => {
+  await act(async () =>
+    render(
+      <BrowserRouter>
+        <BodyComponent />
+      </BrowserRouter>
+    )
+  );
+
+  const cardsBeforeSearch = screen.getAllByTestId("resCard");
+
+  expect(cardsBeforeSearch.length).toBe(8);
+
+  const searchBtn = screen.getByRole("button", { name: "Search" });
+
+  expect(searchBtn).toBeInTheDocument();
+
+  const searchInput = screen.getByTestId("searchInput"); // we don't have any palceholder for this input box. Add "data-testid=searchInput" to input box in component
+
+  fireEvent.change(searchInput, { target: { value: "pizza" } }); // target is for e.target.value which is available by browser in component. Here we don't have e.target
+
+  fireEvent.click(searchBtn);
+
+  const cardsAfterSearch = screen.getAllByTestId("resCard");
+
+  expect(cardsAfterSearch.length).toBe(2);
+});
+
+it("Should filter Top Rated Restaurant", async () => {
+  await act(async () =>
+    render(
+      <BrowserRouter>
+        <BodyComponent />
+      </BrowserRouter>
+    )
+  );
+
+  const cardsBeforeFilter = screen.getAllByTestId("resCard");
+
+  expect(cardsBeforeFilter.length).toBe(8);
+
+  const topRatedBtn = screen.getByRole("button", {
+    name: "Top Rated Restaurants",
+  });
+  fireEvent.click(topRatedBtn);
+
+  const cardsAfterFilter = screen.getAllByTestId("resCard");
+  expect(cardsAfterFilter.length).toBe(7);
 });
 ```
 
