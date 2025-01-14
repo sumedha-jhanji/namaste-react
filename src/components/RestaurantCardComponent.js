@@ -8,6 +8,7 @@ const styleCard = {
 
 const RestaurantCardComponent = (props) => {
     const { resData } = props;
+
     const {
       cloudinaryImageId,
       name,
@@ -15,10 +16,10 @@ const RestaurantCardComponent = (props) => {
       cuisines,
       costForTwo,
       sla,
-    } = resData?.info;
+    } = resData;
   
     return (
-      <div className="m-4 p-4 w-[350px] rounded-lg bg-gray-100 hover:bg-gray-200">
+      <div className="m-4 p-4 w-[350px] rounded-lg bg-gray-100 hover:bg-gray-200" data-testid="resCard">
         <img
           className="rounded-lg h-60 w-full"
           alt="res-logo"
