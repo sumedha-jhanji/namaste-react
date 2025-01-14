@@ -1266,6 +1266,184 @@ const Button = styled.button`
   - it some trime slooks ugly if try to use it prrbuilt components
   - it needs some learning curve before using it
 
+# Testing
+## Types
+- Manual testing
+- using libraries write test cases which will test code automatically
+  - types
+    - Unit testing: test react component(s) in isolation example we want to just test header component. we will write test cases only to verify that it got properly rendered and functioning
+    - Integration Testing: testing the integration of components. Test some particular flow composed of few components
+    - End to End testing (e2e) : testing react from say user landing on to the app till he logouts (through out the app)
+   
+## libraries
+- react testing library (https://testing-library.com/docs/react-testing-library/intro/)
+  - builds on top of DOM Testing Library by adding APIs for working with React components.
+  - already integrated if we have created app using create-react-app
+  - uses JEST (https://jestjs.io/)
+    - delightful Javascript Testing Framework with a focus on simplicity
+    - it inturn uses babel
+      
+## steps to use react testing library
+- npm install -D @testing-library/react   : install react testing library
+- npm install -D jest   : install jest
+- npm install --save-dev babel-jest @babel/core @babel/preset-env   : install other babel dependencies
+- configure babel (babel.config.js)
+```js
+module.exports = {
+  presets: [['@babel/preset-env', {targets: {node: 'current'}}]],
+};
+```
+- since parcel internally uses babel, so it will conflict with our above babel configuration. so we need to configure parcel file to disable parcel babel configuration (read "https://parceljs.org/languages/javascript/" -> "babel/usage with other tools" part)
+  - create .parcelrc file
+  ```js
+  {
+    "extends": "@parcel/config-default",
+    "transformers": {
+      "*.{js,mjs,jsx,cjs,ts,tsx}": [
+        "@parcel/transformer-js",
+        "@parcel/transformer-react-refresh-wrap"
+      ]
+    }
+  }
+  ```
+  - npx jest --init    : do jest consfiguration
+      - for test environment choose "jsdom (browser-like) : since test cases are not running on browser, they need runtime to execute it, we use jsdom - library which parses and interacts wth assembled HTML just like browser)
+- npm install --save-dev jest-environment-jsdom    : install jsdom library for jest 28
+- create folder say under src/components names "__tests__" OR create file name *.(spec|test.[jt]s"
+- **Note:** __ is know as dunder (dunder tests), used as reserved word
+- use "test(string, callback function)" to start writing a test case
+
+```js
+sum.js
+export const sum = (a, b) =>{
+return a+b
+}
+```
+
+```js
+sum.spec.js
+test("sum of 2 numbers",() ={
+  const result = sum(3, 4);
+  //assertion
+  expect(result).toBe(7);
+})
+```
+
+## Unit Testing - react component
+- firstly to test any component, we need to render that component first in to JSDOM
+- to check if component rendered or not, we use "SCREEN" object from react-testing library
+- install library **"npm install -D @babel/preset-react"** to allow jsx inside the test cases. It helps to convert jsx code to normal html code
+- also include  @babel/preset-react inside babel.config.js
+```js
+babel.config.js
+const { runtime } = require("./jest.config");
+
+module.exports = {
+  presets: [
+      ['@babel/preset-env', {targets: {node: 'current'}}],
+      ['@babel/preset-react',{runtime: "automatic"}]
+  ],
+
+};
+```
+
+- install a library for "tobeInTheDocument()" to work. Library **@testing-library/jest-dom**
+``` js
+const { render, screen } = require("@testing-library/react")
+const { default: ContactComponent } = require("../ContactComponent")
+import '@testing-library/jest-dom'; // include jest-dom for "toBeInTheDocument"
+
+test("Should load contact us component", () =>{
+    //rendered component in JSDOM
+    render(<ContactComponent />);
+
+    //get all the headings from component using "Screen" object of react-testing library
+    const heading = screen.getByRole("heading");
+
+    //it will verify, whether the heading is there in document or not.
+    //Assertion
+    expect(heading).toBeInTheDocument();
+});
+
+test("Should load button inside contact us component", () =>{
+    render(<ContactComponent />);
+
+    const button = screen.getByRole("button");
+    //Assertion
+    expect(button).toBeInTheDocument();
+});
+
+test("Should load button inside contact us component by text", () =>{
+    render(<ContactComponent />);
+    
+    const button = screen.getByText("Submit");
+    //Assertion
+    expect(button).toBeInTheDocument();
+});
+
+test("Should load input name inside contact us component", () =>{
+    render(<ContactComponent />);
+    
+    const input = screen.getByPlaceholderText("name");
+    //Assertion
+    expect(input).toBeInTheDocument();
+});
+
+test("Should load 2 input boxes inside contact us component", () =>{
+    render(<ContactComponent />);
+    //Querying
+    const inputBoxes = screen.getAllByRole("textbox");
+    //Assertion
+    expect(inputBoxes.length).toBe(2)
+});
+
+test("example of not toBe (inverse)", () =>{
+    render(<ContactComponent />);
+    
+    //Querying
+    const inputBoxes = screen.getAllByRole("textbox");
+    //Assertion
+    expect(inputBoxes.length).not.toBe(3)
+});
+```
+
+- if we do console.log() in test case, it will return JSX element/ react fiber node.
+
+## Group test cases
+- describe()
+```js
+describe("", () =>{
+  test("", () =>{});
+  test("", () =>{});
+  describe("",() =>{
+     test("", () =>{});
+     test("", () =>{});
+  })
+});
+
+describe("", () =>{
+  test("", () =>{});
+  test("", () =>{});
+  describe("",() =>{
+     test("", () =>{});
+     test("", () =>{});
+  })
+});
+
+```
+
+- we can also use "it()" in place of "test()".  it is alias of test
+
+```js
+describe("Contact Us Test cases", () =>{
+
+    test("Should load contact us component", () =>{        
+    });
+    
+    it("example of not toBe (inverse)", () =>{        
+    });
+});
+```
 
 
 
