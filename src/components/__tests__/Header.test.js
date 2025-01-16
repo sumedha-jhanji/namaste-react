@@ -47,18 +47,45 @@ it("Should render Header Component with a Cart item ", () => {
 });
 
 it("Should change Login button to Logout on click", () => {
-    render(
-      <BrowserRouter>
-        <HeaderComponent />
-      </BrowserRouter>
-    );
-  
-    const loginButton = screen.getByRole("button", {name: "Login"}); 
-  
-    fireEvent.click(loginButton);
+  render(
+    <BrowserRouter>
+      <HeaderComponent />
+    </BrowserRouter>
+  );
 
-    const logoutButton = screen.getByRole("button", {name: "Logout"}); 
-    expect(logoutButton).toBeInTheDocument();
+  const loginButton = screen.getByRole("button", { name: "Login" });
 
+  fireEvent.click(loginButton);
+
+  const logoutButton = screen.getByRole("button", { name: "Logout" });
+  expect(logoutButton).toBeInTheDocument();
+});
+
+it("Should displays online status", () => {
+  Object.defineProperty(window.navigator, "onLine", {
+    writable: true,
+    value: true,
   });
-  
+  render(
+    <BrowserRouter>
+      <HeaderComponent />
+    </BrowserRouter>
+  );
+
+  const onlineText = screen.getByText(/✅/);
+
+  //Assertion;
+  expect(onlineText).toBeInTheDocument();
+});
+
+// it('Should display Offline when offline', () => {
+//   Object.defineProperty(window.navigator, "onLine", {
+//     writable: true,
+//     value: false,
+//   });
+//   render(<BrowserRouter>
+//     <HeaderComponent />
+//   </BrowserRouter>);
+//   const offlineText = screen.getByText(/🔴/i);
+//   expect(offlineText).toBeInTheDocument();
+// });
