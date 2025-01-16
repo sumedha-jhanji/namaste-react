@@ -1329,6 +1329,45 @@ test("sum of 2 numbers",() ={
 })
 ```
 
+## Higher Order components
+- takes components as input and return components as output
+- enhaces the features of input component
+- pure functions as it doesn't change existimg functionality of passed input function
+```js
+- RetaurantCard function
+//Higher Order component
+// Input - RestarurantCard,  output is => RestarurantCardPromoted
+
+export const withOpenLabel = (RestaurantCard) => {
+  return (props) => {
+    return (
+      <div>
+        <label className="absolute bg-black text-white m-1 p-1 rounded-lg">
+          Open
+        </label>
+        <RestaurantCard {...props} />
+      </div>
+    );
+  };
+};
+
+- body component
+import RestaurantCardComponent, {
+  withOpenLabel,
+} from "./RestaurantCardComponent";
+
+const RestaurantCardOpened = withOpenLabel(RestaurantCardComponent);
+
+{/* If the restaurant is open then add a promoted label to it */}
+{restaurant?.info.isOpen ? (
+  <RestaurantCardOpened resData={restaurant?.info} />
+) : (
+  <RestaurantCardComponent resData={restaurant?.info} />
+)}
+
+
+```
+
 ## UNIT TESTING - react component
 - firstly to test any component, we need to render that component first in to JSDOM
 - to check if component rendered or not, we use "SCREEN" object from react-testing library
