@@ -1364,9 +1364,228 @@ const RestaurantCardOpened = withOpenLabel(RestaurantCardComponent);
 ) : (
   <RestaurantCardComponent resData={restaurant?.info} />
 )}
-
-
 ```
+
+## Controlled and Un-Controlled Components
+- Controlled component: controlling the child componet via a parent component.
+- Uncontrolled component: component who has its own state
+- example - say we have RestarurantMenu component which loads RestaurantCategory component. If RestaurantCategory maintains its own state  it is called Uncontrolled component. When we lift its state up to parent i.e to RestarurantMenu component, then it is called as controlled component.
+
+```js
+- Example of uncontrolled component
+
+import React, { useState } from "react";
+import ItemListComponent from "./ItemListComponent";
+
+//
+const RestaurantCategoryComponent = ({ data }) => {
+ const [showItems, setShowItems] = useState(false);
+
+  const handleClick = () => {
+    setShowItems(!showItems);
+  };
+  return (
+    <div>
+      {/* Header */}
+      <div className="w-6/12 mx-auto my-4 bg-gray-50 shadow-lg p-4">
+        <div
+          className="flex justify-between cursor-pointer"
+          onClick={handleClick}
+        >
+          <span className="font-bold text-lg">
+            {data.title} ({data.itemCards.length})
+          </span>
+          <span>⬇️</span>
+        </div>
+        {showItems && <ItemListComponent items={data.itemCards}  />}
+      </div>
+    </div>
+  );
+};
+
+export default RestaurantCategoryComponent;
+```
+
+```js
+- Example of controlled Component
+- Child component
+import React from "react";
+import ItemListComponent from "./ItemListComponent";
+
+//showIndex and setShowIndex are used to control the state of child component
+const RestaurantCategoryComponent = ({ data, showItems, setShowIndex }) => {
+  const handleClick = () => {
+    setShowIndex(); // child component will be able to modify the state variable of parent
+  };
+  return (
+    <div>
+      {/* Header */}
+      <div className="w-6/12 mx-auto my-4 bg-gray-50 shadow-lg p-4">
+        <div
+          className="flex justify-between cursor-pointer"
+          onClick={handleClick}
+        >
+          <span className="font-bold text-lg">
+            {data.title} ({data.itemCards.length})
+          </span>
+          <span>⬇️</span>
+        </div>
+        {showItems && <ItemListComponent items={data.itemCards}  />}
+      </div>
+    </div>
+  );
+};
+
+export default RestaurantCategoryComponent;
+
+
+-In parent component
+const [showIndex, setShowIndex] = useState(null);
+
+<RestaurantCategoryComponent
+  key={category?.card?.card.title}
+  data={category?.card?.card}
+  showItems ={index === showIndex ? true : false}
+  setShowIndex={() => setShowIndex(index)} // child component will be able to modify the state variable of parent
+/>
+```
+
+## How child component can modify state of parent component
+- indirectly
+```js
+- parent component
+<RestaurantCategoryComponent
+  key={category?.card?.card.title}
+  data={category?.card?.card}
+  showItems ={index === showIndex ? true : false}
+  setShowIndex={() => setShowIndex(index)} //pass function to child component as prop
+/>
+```
+
+```js
+- child component
+const RestaurantCategoryComponent = ({ data, showItems, setShowIndex }) => {
+ const handleClick = () => {
+    setShowIndex(); // call function passed from parent for parent conponent state  change
+  };
+}
+```
+
+## Props Drilling
+- react is one way
+- we might need to pass data from one component down to other some where in hirerchy
+- to achieve that we pass data as prop from one component to another and so on.
+
+## React Context
+- access data from anywhere
+- we keep some data at global level and can access where ever it is available
+- **Steps to create**
+- use react library "createContext()": it needs some information that it will hold
+```js
+import { createContext } from "react";
+
+const UserContext = createContext({
+    loggedInUser:"Default User",
+});
+
+export default UserContext
+```
+- to use the same in component, we need to use hook "useContext(contextname)"
+```js
+import { useContext } from "react";
+const {loggedInUser} = useContext(UserContext);
+```
+
+- **Note:** in class based components we don't have hooks. We use **Context consumer**. So we need to follow below way to use context
+1) import Context say UserContext
+2) use <UserContext.Consumer>
+3) inside that we need to use call back function to access data from context
+```js
+import UserContext from "../utils/userContext";
+<UserContext.Consumer>
+  {(data) => data.loggedInUser}
+</UserContext.Consumer>
+```
+
+- **Steps to Edit UserContext Data - we use context provider**
+- it is performant i.e. it has super peformance
+- Example - we make an API call and need to update the logged in user name in context.
+1) make call to api and set some state variable
+2) wrap the component where we want the updated value of context in ContextName.Provider tag and provide the new value to context
+```js
+const [userName, setUserName] = useState();
+
+useEffect(() => {
+  //Make an API call and sdend user name and password
+  const data = {
+    name: "Sumedha Jhanji",
+  };
+  setUserName(data.name);
+}, []);
+
+return (
+    <UserContext.Provider value={{ loggedInUser: userName, setUserName }}>
+      <div className="app">
+        {/* Header */}
+        <HeaderComponent />
+        {/* if path= /  then body component */}
+        {/* if path= /about   then aout component*/}
+        {/* if path= /contact   then ContactComponent*/}
+        <Outlet />
+        {/* Footer */}
+      </div>
+    </UserContext.Provider>
+);
+```
+
+- we can have nested context providers too. Value depends upon the place where provider has been added
+```js
+return (
+  //default value of context
+  <UserContext.Provider value={{ loggedInUser: userName, setUserName }}>
+    {/* context: sumedha jhanji */}
+    <div className="app">
+      {/* Header */}
+      {/* <UserContext.Provider value={{ loggedInUser: "Nested Context" }}> */}
+      {/* context: Nested Context */}
+      <HeaderComponent />
+      {/* </UserContext.Provider> */}
+      {/* if path= /  then body component */}
+      {/* if path= /about   then aout component*/}
+      {/* if path= /contact   then ContactComponent*/}
+      <Outlet />
+      {/* Footer */}
+    </div>
+  </UserContext.Provider>
+);
+```
+
+- **Note:** setUserName is provided to components as part of context which we can extract using useContext hook in other component and can call it to modify the value of context state.
+- - example, we have some text box in say body componnet, we want to update value of loggedInUser with value entered in text box here.
+```js
+- body component
+ const {loggedInUser, setUserName} = useContext(UserContext);
+
+<div className="search m-4 p-4 flex items-center">
+  <label>UserName : </label>
+  <input
+    className="border border-black p-2"
+    value={loggedInUser}
+    onChange={(e) => setUserName(e.target.value)}  //setUserName if from context provided by app.js
+  />
+</div>
+```
+
+- **Note:** we can pass state as well as method to update the same via context provider
+
+# REDUX (other libraries like Zustand)
+- separate library than react
+- we import it in our projects
+- it is at data layer end.
+- used for STATE MANAGEMENT
+- adv: debugging/testing of app is easy
+- redux dev tools are available
+- libraies: react-redux(bridge gap between toolkit and react) & react toolkit (rtk : new and standardr way of writing redux logic)
 
 ## UNIT TESTING - react component
 - firstly to test any component, we need to render that component first in to JSDOM
