@@ -77,7 +77,7 @@ export const withOpenLabel = (RestaurantCard) => {
         <label className="absolute bg-black text-white m-1 p-1 rounded-lg">
           Open
         </label>
-        <RestaurantCard {...props} />
+        <RestaurantCardComponent {...props} />
       </div>
     );
   };

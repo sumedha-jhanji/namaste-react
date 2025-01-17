@@ -1,8 +1,9 @@
 import Logo from "../images/food_logo.jpg";
 import Cart from "../images/cart.jpg";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
+import UserContext from "../utils/userContext";
 
 const HeaderComponent = () => {
   const [btnName, setBtnName] = useState("Login");
@@ -12,6 +13,8 @@ const HeaderComponent = () => {
     if (btnName.toLowerCase() == "login") setBtnName("Logout");
     else setBtnName("Login");
   };
+
+  const { loggedInUser } = useContext(UserContext);
 
   return (
     <div className="flex justify-between bg-pink-100 shadow-lg sm:bg-yellow-50 lg:bg-green-50">
@@ -40,10 +43,9 @@ const HeaderComponent = () => {
             </div>
           </li>
           <li className="px-4">
-            <button onClick={handleBtnName}>
-              {btnName}
-            </button>
+            <button onClick={handleBtnName}>{btnName}</button>
           </li>
+          <li className="px-4 font-bold">{loggedInUser}</li>
         </ul>
       </div>
     </div>

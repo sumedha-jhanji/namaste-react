@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 // import RestaurantData from "../data/restaurantData.json";
 import RestaurantCardComponent, {
   withOpenLabel,
@@ -7,6 +7,7 @@ import ShimmerComponent from "./ShimmerComponent.js";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus.js";
 import { LIST_API } from "../utils/constants.js";
+import UserContext from "../utils/userContext.js";
 
 const BodyComponent = () => {
   //local state variable - scope will be inside Bosy component
@@ -14,6 +15,7 @@ const BodyComponent = () => {
   //const [resData, filteredResData] = useRestaurantsList();
   const [resData, setResData] = useState([]);
   const [filteredResData, setfilteredResData] = useState([]);
+  const {loggedInUser, setUserName} = useContext(UserContext);
 
   const RestaurantCardOpened = withOpenLabel(RestaurantCardComponent);
 
@@ -73,6 +75,14 @@ const BodyComponent = () => {
             Top Rated Restaurants
           </button>
         </div>
+        <div className="search m-4 p-4 flex items-center">
+          <label>UserName : </label>
+          <input
+            className="border border-black p-2"
+            value={loggedInUser}
+            onChange={(e) => setUserName(e.target.value)} //setUserName if from context provided by app.js
+          />
+        </div>
         <div className="m-4 p-4 flex grow items-center">
           <input
             data-testid="searchInput"
@@ -116,6 +126,7 @@ const BodyComponent = () => {
             Search
           </button> */}
         </div>
+       
       </div>
       <div className="flex flex-wrap items-center overflow-hidden justify-center">
         {/* using static data and non dynamic page */}
