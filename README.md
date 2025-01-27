@@ -1589,6 +1589,8 @@ return (
 - redux dev tools are available
 - libraies: react-redux(bridge gap between toolkit and react) & react toolkit (rtk : new and standard way of writing redux logic)
 - redux was having too much boiler plate code but redux toolkit has short code.
+- as per redux -> u should not mutate the state
+- as per redux toolkit, u should either mutate the state or return the new state.
 
 ## Redux Store
 - big object which is kept at central place
