@@ -1,7 +1,18 @@
 import React from "react";
 import { CDN_URL } from "../utils/constants";
+import { useDispatch } from "react-redux";
+import { addItem, removeItem } from "../utils/cartSlice";
 
 const ItemListComponent = ({ items }) => {
+  const dispatch = useDispatch();
+  const handleAddItem = (item) => {
+    dispatch(addItem(item));
+  };
+
+  const handleRemoveItem = (item) => {
+    dispatch(removeItem(item));
+  };
+
   return (
     <div>
       {items.map((item) => (
@@ -20,15 +31,15 @@ const ItemListComponent = ({ items }) => {
                   : item.card.info.defaultPrice / 100}
               </span>
             </div>
-            <p className="text-xs">{item.card.info.description ?? item.card.info.name}</p>
+            <p className="text-xs">
+              {item.card.info.description ?? item.card.info.name}
+            </p>
           </div>
           <div className="w-3/12 p-4">
             <div className="absolute">
-              <button
-                className="p-2 mx-16 rounded-lg bg-black text-white shadow-lg"
-                // onClick={() => handleAddItem(item)}
-              >
-                Add +
+              <button className="p-2 mx-16 rounded-lg bg-black text-white shadow-lg">
+                <span onClick={() => handleRemoveItem(item)}>-</span> Add{" "}
+                <span onClick={() => handleAddItem(item)}>+</span>
               </button>
             </div>
             <img src={CDN_URL + item.card.info.imageId} className="w-full" />

@@ -8,6 +8,9 @@ import ErrorComponent from "./components/ErrorComponent";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import RestaurantMenuComponent from "./components/RestaurantMenuComponent";
 import UserContext from "./utils/userContext";
+import { Provider } from "react-redux";
+import appStore from "./utils/appStore";
+import CartComponent from "./components/CartComponent";
 
 const AppLayout = () => {
   //suppose some api is giving user details
@@ -24,22 +27,25 @@ const AppLayout = () => {
   }, []);
 
   return (
-    //default value of context
-    <UserContext.Provider value={{ loggedInUser: userName, setUserName }}>
-      {/* context: sumedha jhanji */}
-      <div className="app">
-        {/* Header */}
-        {/* <UserContext.Provider value={{ loggedInUser: "Nested Context" }}> */}
-        {/* context: Nested Context */}
-        <HeaderComponent />
-        {/* </UserContext.Provider> */}
-        {/* if path= /  then body component */}
-        {/* if path= /about   then aout component*/}
-        {/* if path= /contact   then ContactComponent*/}
-        <Outlet />
-        {/* Footer */}
-      </div>
-    </UserContext.Provider>
+    //provide store to app
+    <Provider store={appStore}>
+      {/* default value of context */}
+      <UserContext.Provider value={{ loggedInUser: userName, setUserName }}>
+        {/* context: sumedha jhanji */}
+        <div className="app">
+          {/* Header */}
+          {/* <UserContext.Provider value={{ loggedInUser: "Nested Context" }}> */}
+          {/* context: Nested Context */}
+          <HeaderComponent />
+          {/* </UserContext.Provider> */}
+          {/* if path= /  then body component */}
+          {/* if path= /about   then aout component*/}
+          {/* if path= /contact   then ContactComponent*/}
+          <Outlet />
+          {/* Footer */}
+        </div>
+      </UserContext.Provider>
+    </Provider>
   );
 };
 
@@ -73,6 +79,10 @@ const appRouter = createBrowserRouter([
       {
         path: "/restaurants/:resId",
         element: <RestaurantMenuComponent />,
+      },
+      {
+        path: "/cart",
+        element: <CartComponent />,
       },
     ],
     errorElement: <ErrorComponent />, // for custok error page
