@@ -34,6 +34,8 @@
 - Run command "npm init" on teminal
 - Specify the required details it is asking for.
 - As a reult we will get "package.json" (configuartion for npm)
+- npm install --legacy-peer-deps
+  - used to bypass peer dependency issues when installing packages. This can be useful when dealing with packages that have outdated or incompatible peer dependencies.
 
 ## React and ReactDOM
 - React not only works on browsers but also on mobiles (react native) etc devices also. That is why wehave 2 files
@@ -1585,8 +1587,115 @@ return (
 - used for STATE MANAGEMENT
 - adv: debugging/testing of app is easy
 - redux dev tools are available
-- libraies: react-redux(bridge gap between toolkit and react) & react toolkit (rtk : new and standardr way of writing redux logic)
+- libraies: react-redux(bridge gap between toolkit and react) & react toolkit (rtk : new and standard way of writing redux logic)
+- redux was having too much boiler plate code but redux toolkit has short code.
 
+## Redux Store
+- big object which is kept at central place
+- any can access that store to read and write data.
+- redux store has slices in it : Logical partitions to keep separate data like user slice, cart slice etc
+- we cannot directly **modify** the slice in store.
+  - firstly we need to dispatch an action. like when we click on Add button, it will **dispatch** an **action**
+  - **action** will call a **function**. This function is known as **Reducer**
+  - **function** will modify the **slice in store**.
+- We can **read** data from slice in store as below:
+  - we will use **selector**
+  - This phenomina is known as **subscribing to store**
+ 
+- **example**
+- **Write flow:** Add item button click -> dispatch an action -> call reducer function -> add item to store
+- **Read flow:** cart will use selector and will subscribe to store to get data.
+
+## Redux toolkit
+- install redux toolkit library (@reduxjs/toolkit)
+- install react redux library (react-redux)
+- build our store
+- Connect store to app
+- Slice (cartslice) to add items to cart
+- dispatch (action)
+- Selector
+
+```js
+- appStore.js
+import { configureStore } from "@reduxjs/toolkit";
+
+const appStore = configureStore({
+  //add slices
+  //one big reducer which cna contain multiple reducers in it
+  reducer: {
+      cart:cartReducer
+      //we can add further sliced reducers here like user: userReducer etc
+  }
+
+});
+
+export default appStore;
+```
+
+```js
+- provide store to app in app.js
+<Provider store={appStore}>
+  <UserContext.Provider value={{ loggedInUser: userName, setUserName }}>
+    <div className="app">
+      <HeaderComponent />
+      <Outlet />
+    </div>
+  </UserContext.Provider>
+</Provider>
+```
+
+```js
+- cartSlice.js
+import { createSlice } from "@reduxjs/toolkit";
+
+const cartSlice = createSlice({
+  name: "cart",
+  initialState: {
+    items: [],
+  },
+//multipe reducers
+  reducers: {
+    //here addItem is action and function against is reducer function
+    addItem: (state, action) => {
+        state.items.push(action.payload);
+    },
+    removeItem:(state, action) =>{
+        const index = state.items.findIndex((x) => x === action.payload);
+        const newItems = [
+           ...state.items.splice(0, index),
+           ...state.items.splice(index + 1),
+        ];
+        state.items = newItems;
+    },
+    clearCart :(state) => {
+        state.items.length = 0;
+    }
+  },
+});
+
+export const{addItem, removeItem, clearCart} = cartSlice.actions;
+
+export default cartSlice.reducer; // exporting it as single reducer
+```
+
+```js
+- header component where we will be reading state item
+const cartItems = useSelector((store) => store.cart.items)
+```
+
+```js
+- component where we want to modify the store
+import { useDispatch } from "react-redux";
+import { addItem, removeItem } from "../utils/cartSlice";
+const dispatch = useDispatch();
+const handleAddItem=(item) =>{
+  dispatch(addItem(item));
+}
+```
+
+- useSelector() : for reading i.e. to subscribe to store slice
+- useDispacther(): used to dispatch the actions from store. It returns "dispatch()" function
+  
 ## UNIT TESTING - react component
 - firstly to test any component, we need to render that component first in to JSDOM
 - to check if component rendered or not, we use "SCREEN" object from react-testing library
