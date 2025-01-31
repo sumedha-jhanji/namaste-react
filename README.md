@@ -1268,7 +1268,7 @@ const Button = styled.button`
   - it some trime slooks ugly if try to use it prrbuilt components
   - it needs some learning curve before using it
 
-# Testing
+# Testing (https://testing-library.com/docs/, https://jestjs.io/docs/getting-started, https://jestjs.io/docs/expect)
 ## Types
 - Manual testing
 - using libraries write test cases which will test code automatically
@@ -1329,6 +1329,67 @@ test("sum of 2 numbers",() ={
   //assertion
   expect(result).toBe(7);
 })
+```
+
+## Mock a function
+- not a real
+- fake function
+- Records
+  - whenever it gets called (we can check number of times it has been called)
+  - arguments passed to call it ( we can check what argumentes we have passed)
+- used very often when we need to make sure a  component calls a callback
+
+```js
+const mock = jest.fn();
+render(<UserForm onUserAdd={mock} />);
+
+expect(mock).toHaveBeenCalled();
+expect(mock).toHaveBeenCalledWith({object});
+```
+
+## Custom Matchers
+```js
+import { screen, render, within } from '@testing-library/react';
+
+function FormData() {
+  return (
+    <div>
+      <button>Go Back</button>
+      <form aria-label="form">
+        <button>Save</button>
+        <button>Cancel</button>
+      </form>
+    </div>
+  )
+}
+render(<FormData />);
+
+- custom matcher code
+function toContainRole(container, role, quantity = 1) {
+  const elements = within(container).queryAllByRole(role);
+
+  if (elements.length === quantity) {
+    return {
+      pass: true
+    };
+  }
+
+  return {
+    pass: false,
+    message: () => `Expected to find ${quantity} ${role} elements. Found ${elements.length} instead.`
+  }
+}
+
+expect.extend({ toContainRole });
+
+- test
+test('the form displays two buttons', () => {
+  render(<FormData />);
+
+  const form = screen.getByRole('form');
+
+  expect(form).toContainRole('button', 2);
+});
 ```
 
 ## Higher Order components
